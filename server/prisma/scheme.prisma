@@ -1,0 +1,41 @@
+// Fixora Database Schema
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+}
+enum Role {
+  CUSTOMER
+  PROVIDER
+  ADMIN
+}
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  REJECTED
+}
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+enum PaymentMethod {
+  CARD
+  UPI
+  NETBANKING
+  CASH
+  WALLET
+}
+enum NotificationType {
+  BOOKING
+  MESSAGE
+  PAYMENT
+  SYSTEM
+  REMINDER
+}

@@ -1,0 +1,13 @@
+{
+  "name": "fixora-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fixora - On-Demand Home Services & Technician Marketplace",
+  "scripts": {
+    "client": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "client:preview": "npm --prefix client run preview",
+    "server": "npm --prefix server run dev",
+    "server:start": "npm --prefix server start"
+  }
+}
