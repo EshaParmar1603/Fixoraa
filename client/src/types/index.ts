@@ -68,6 +68,32 @@ export interface User {
   };
 }
 
+export type ProviderProfession = 'technician' | 'designer' | 'caterer' | 'event_planner';
+
+export interface PortfolioProject {
+  id: string;
+  title: string;
+  theme: string;
+  areaSqFt?: number;
+  cost?: number;
+  imageUrl: string;
+  beforeImageUrl?: string;
+  clientName?: string;
+  completionDate?: string;
+  description?: string;
+  tags?: string[];
+}
+
+export interface CatererMenu {
+  id: string;
+  name: string;
+  category: 'starter' | 'main' | 'dessert' | 'beverage' | 'live_counter';
+  dietType: 'veg' | 'non-veg' | 'jain' | 'vegan';
+  pricePerPlate?: number;
+  description?: string;
+  imageUrl?: string;
+}
+
 export interface ProviderProfile {
   id: string;
   userId: string;
@@ -85,6 +111,16 @@ export interface ProviderProfile {
   services?: ProviderService[];
   availabilities?: ProviderAvailability[];
   reviews?: Review[];
+  // Specialization metadata
+  profession?: ProviderProfession;
+  specialties?: string[];
+  portfolioProjects?: PortfolioProject[];
+  catererMenus?: CatererMenu[];
+  fssaiNumber?: string;
+  councilRegistration?: string;
+  pricePerSqFt?: number;
+  pricePerPlate?: number;
+  tastingAvailable?: boolean;
 }
 
 export interface ProviderService {
