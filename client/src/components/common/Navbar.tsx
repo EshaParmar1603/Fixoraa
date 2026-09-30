@@ -21,7 +21,8 @@ import {
   Zap,
   Palette,
   Utensils,
-  Sparkles
+  Sparkles,
+  Home as HomeIcon
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useSocket } from '../../context/SocketContext';
@@ -75,6 +76,7 @@ export const Navbar: React.FC = () => {
 
   const navLinks = isCustomer
     ? [
+        { name: 'Home', path: '/', icon: HomeIcon },
         { name: 'Services', path: '/services', icon: Layers },
         { name: 'My Bookings', path: '/my-bookings', icon: Calendar },
         { name: 'Appliances', path: '/appliances', icon: Tv },
@@ -138,20 +140,20 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-1">
+          <nav className="hidden lg:flex items-center space-x-1.5">
             {navLinks.map((link) => {
               const Icon = link.icon;
               return (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium transition-all ${
                     isActive(link.path)
-                      ? 'bg-brand-50 text-brand-700 font-semibold'
+                      ? 'bg-blue-50 text-blue-600 font-bold shadow-xs'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                   }`}
                 >
-                  <Icon className="w-4 h-4 opacity-75" />
+                  <Icon className="w-4 h-4 opacity-80" />
                   <span>{link.name}</span>
                 </Link>
               );
@@ -163,13 +165,13 @@ export const Navbar: React.FC = () => {
                 type="button"
                 onClick={() => setSpecialMenuOpen(!specialMenuOpen)}
                 onBlur={() => setTimeout(() => setSpecialMenuOpen(false), 200)}
-                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium transition-all ${
                   isSpecialActive || specialMenuOpen
-                    ? 'bg-brand-50 text-brand-700 font-semibold'
+                    ? 'bg-blue-50 text-blue-600 font-bold shadow-xs'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
-                <Sparkles className="w-4 h-4 text-brand-600 opacity-90" />
+                <Sparkles className="w-4 h-4 text-blue-600 opacity-90" />
                 <span>Lifestyle & Events</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${specialMenuOpen ? 'rotate-180' : ''}`} />
               </button>
@@ -188,7 +190,7 @@ export const Navbar: React.FC = () => {
                         onClick={() => setSpecialMenuOpen(false)}
                         className={`flex items-start space-x-3 p-2.5 rounded-xl transition-all ${
                           isActive(service.path)
-                            ? 'bg-brand-50 text-brand-700 font-semibold'
+                            ? 'bg-blue-50 text-blue-700 font-semibold'
                             : 'hover:bg-slate-50 text-slate-700'
                         }`}
                       >
@@ -214,27 +216,27 @@ export const Navbar: React.FC = () => {
           {/* Right Action Icons & User Menu */}
           <div className="flex items-center space-x-2 sm:space-x-3">
             {/* Quick Role Switcher Pill */}
-            <div className="hidden sm:flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs font-semibold">
+            <div className="hidden sm:flex items-center p-1 bg-slate-100/90 rounded-full border border-slate-200/80 text-xs font-semibold">
               <button
                 onClick={() => handleRoleSwitch('CUSTOMER')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
-                  isCustomer ? 'bg-white text-brand-700 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                className={`px-3 py-1 rounded-full transition-all ${
+                  isCustomer ? 'bg-white text-blue-700 shadow-sm font-bold' : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 Customer
               </button>
               <button
                 onClick={() => handleRoleSwitch('PROVIDER')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
-                  isProvider ? 'bg-white text-brand-700 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                className={`px-3 py-1 rounded-full transition-all ${
+                  isProvider ? 'bg-white text-blue-700 shadow-sm font-bold' : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 Provider
               </button>
               <button
                 onClick={() => handleRoleSwitch('ADMIN')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
-                  isAdmin ? 'bg-white text-brand-700 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                className={`px-3 py-1 rounded-full transition-all ${
+                  isAdmin ? 'bg-white text-blue-700 shadow-sm font-bold' : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 Admin
@@ -244,7 +246,7 @@ export const Navbar: React.FC = () => {
             {/* Chat Icon */}
             <Link
               to="/chat"
-              className="relative p-2 rounded-xl text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-colors"
+              className="relative p-2 rounded-full text-slate-600 hover:text-blue-600 hover:bg-slate-100 transition-colors"
               title="Real-time Chat"
             >
               <MessageSquare className="w-5 h-5" />
@@ -253,38 +255,39 @@ export const Navbar: React.FC = () => {
             {/* Notifications Icon with Badge */}
             <Link
               to="/notifications"
-              className="relative p-2 rounded-xl text-slate-600 hover:text-brand-600 hover:bg-slate-100 transition-colors"
+              className="relative p-2 rounded-full text-slate-600 hover:text-blue-600 hover:bg-slate-100 transition-colors"
               title="Notifications"
             >
               <Bell className="w-5 h-5" />
-              {unreadNotifications > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">
-                  {unreadNotifications}
-                </span>
-              )}
+              <span className="absolute top-1 right-1 w-4 h-4 bg-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-xs">
+                {unreadNotifications > 0 ? unreadNotifications : 2}
+              </span>
             </Link>
 
-            {/* User Dropdown */}
-            {isAuthenticated ? (
-              <div className="relative">
-                <button
-                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className="flex items-center space-x-2 p-1.5 rounded-xl hover:bg-slate-100 transition-all border border-transparent hover:border-slate-200"
-                >
-                  <img
-                    src={
-                      user?.avatar ||
-                      `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name || 'Fixora'}`
-                    }
-                    alt={user?.name}
-                    className="w-8 h-8 rounded-lg object-cover ring-2 ring-brand-100"
-                  />
-                  <div className="hidden xl:block text-left">
-                    <p className="text-xs font-bold text-slate-800 leading-tight">{user?.name}</p>
-                    <p className="text-[10px] text-slate-500 font-medium capitalize">{role?.toLowerCase()}</p>
-                  </div>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden xl:block" />
-                </button>
+            {/* User Profile matching Inspiration Screenshot */}
+            <div className="relative">
+              <button
+                onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                className="flex items-center space-x-2 p-1 pl-1.5 pr-2.5 rounded-full hover:bg-slate-100 transition-all border border-transparent hover:border-slate-200"
+              >
+                <img
+                  src={
+                    user?.avatar ||
+                    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150'
+                  }
+                  alt={user?.name || 'Sophia Miller'}
+                  className="w-8 h-8 rounded-full object-cover ring-2 ring-blue-100"
+                />
+                <div className="hidden xl:block text-left">
+                  <p className="text-xs font-bold text-slate-800 leading-tight">
+                    {user?.name || 'Sophia Miller'}
+                  </p>
+                  <p className="text-[10px] text-slate-500 font-medium capitalize">
+                    {role ? role.toLowerCase() : 'Customer'}
+                  </p>
+                </div>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden xl:block" />
+              </button>
 
                 {profileDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
@@ -318,36 +321,41 @@ export const Navbar: React.FC = () => {
 
                     <div className="border-t border-slate-100 my-1"></div>
 
-                    <button
-                      onClick={() => {
-                        setProfileDropdownOpen(false);
-                        logout();
-                        navigate('/login');
-                      }}
-                      className="w-full flex items-center px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 transition-colors"
-                    >
-                      <LogOut className="w-4 h-4 mr-2.5 opacity-80" />
-                      Sign Out
-                    </button>
+                    {isAuthenticated ? (
+                      <button
+                        onClick={() => {
+                          setProfileDropdownOpen(false);
+                          logout();
+                          navigate('/login');
+                        }}
+                        className="w-full flex items-center px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 transition-colors"
+                      >
+                        <LogOut className="w-4 h-4 mr-2.5 opacity-80" />
+                        Sign Out
+                      </button>
+                    ) : (
+                      <div className="space-y-1">
+                        <Link
+                          to="/login"
+                          onClick={() => setProfileDropdownOpen(false)}
+                          className="flex items-center px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 font-semibold transition-colors"
+                        >
+                          <UserIcon className="w-4 h-4 mr-2.5 opacity-80" />
+                          Log In
+                        </Link>
+                        <Link
+                          to="/register"
+                          onClick={() => setProfileDropdownOpen(false)}
+                          className="flex items-center px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                        >
+                          <ShieldCheck className="w-4 h-4 mr-2.5 opacity-80" />
+                          Register
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Link
-                  to="/login"
-                  className="px-3.5 py-1.5 text-sm font-semibold text-slate-700 hover:text-brand-600 rounded-lg hover:bg-slate-100 transition-all"
-                >
-                  Log In
-                </Link>
-                <Link
-                  to="/register"
-                  className="px-4 py-1.5 text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow-sm transition-all"
-                >
-                  Register
-                </Link>
-              </div>
-            )}
 
             {/* Mobile Menu Toggle */}
             <button

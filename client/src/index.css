@@ -9,6 +9,10 @@
   }
 }
 
+.font-doodle {
+  font-family: 'Caveat', cursive, sans-serif;
+}
+
 /* Custom Glassmorphism & UI Accents */
 .glass-panel {
   background: rgba(255, 255, 255, 0.85);
