@@ -17,7 +17,8 @@ import {
   FileText,
   Clock,
   Sparkles,
-  Palette
+  Palette,
+  Calendar
 } from 'lucide-react';
 import { ServiceCard } from '../../components/cards/ServiceCard';
 import { ProviderCard } from '../../components/cards/ProviderCard';
@@ -161,36 +162,6 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* BILL PREDICTOR FEATURE BANNER */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-brand-900 via-indigo-950 to-slate-900 rounded-3xl p-7 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-            <Zap className="w-56 h-56 text-brand-400" />
-          </div>
-          <div className="space-y-3 max-w-2xl relative z-10">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-amber-300">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>New Feature: Real-Time Power & Flat Sharing Engine</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-              Predict Your Exact Electricity Bill & Split Rent With Flatmates
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
-              Select your Indian city DISCOM tariff, specify AC & appliance hours, calculate rooftop solar net-metering offsets, and generate 1-click WhatsApp splits for your roommates in Indian Rupees (₹).
-            </p>
-          </div>
-          <div className="shrink-0 relative z-10 flex flex-col sm:flex-row gap-3">
-            <Link
-              to="/bill-predictor"
-              className="px-6 py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs sm:text-sm rounded-2xl shadow-lg transition-all flex items-center justify-center space-x-2"
-            >
-              <Zap className="w-4 h-4 fill-slate-950" />
-              <span>Launch Bill Predictor</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* CATEGORIES GRID */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-8">
@@ -294,126 +265,6 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* AI INTERIOR DESIGN & RENOVATION SHOWCASE */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-          <div>
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-xs font-bold text-amber-800 mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>Architectural Interior & Renovation Studio</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-              Designing a New Home or Renovating?
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Select your signature theme (Modest, Simple, Office Look), calculate turnkey budgets, and get allocated certified designers.
-            </p>
-          </div>
-          <Link
-            to="/interior-design"
-            className="text-xs sm:text-sm font-bold text-brand-600 hover:text-brand-700 flex items-center space-x-1 shrink-0"
-          >
-            <span>Explore All Themes & Renders</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Theme Card 1: Simple & Minimalist */}
-          <Link
-            to="/interior-design"
-            className="group rounded-3xl overflow-hidden border border-slate-200/80 bg-white hover:shadow-xl transition-all duration-300 flex flex-col"
-          >
-            <div className="relative h-56 overflow-hidden bg-slate-100">
-              <img
-                src="/interiors/simple_minimalist.jpg"
-                alt="Simple Minimalist Interior"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <span className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-950/70 backdrop-blur-md text-white text-xs font-bold">
-                🌿 Simple & Minimalist
-              </span>
-            </div>
-            <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-              <div>
-                <h3 className="text-base font-bold text-slate-900 group-hover:text-brand-600 transition-colors">
-                  Clean Scandinavian & Light Oak
-                </h3>
-                <p className="text-xs text-slate-500 mt-1 line-clamp-2">
-                  Concealed storage, bouclé neutral upholstery, fluted TV panels, and warm indirect cove lighting.
-                </p>
-              </div>
-              <div className="flex items-center justify-between text-xs pt-3 border-t border-slate-100 font-bold text-brand-600">
-                <span>View 3D Inspo & Rates</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </Link>
-
-          {/* Theme Card 2: Modest & Indian Modern */}
-          <Link
-            to="/interior-design"
-            className="group rounded-3xl overflow-hidden border border-slate-200/80 bg-white hover:shadow-xl transition-all duration-300 flex flex-col"
-          >
-            <div className="relative h-56 overflow-hidden bg-slate-100">
-              <img
-                src="/interiors/modest_indian.jpg"
-                alt="Modest Indian Modern Interior"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <span className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-950/70 backdrop-blur-md text-white text-xs font-bold">
-                🪔 Modest & Indian Contemporary
-              </span>
-            </div>
-            <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-              <div>
-                <h3 className="text-base font-bold text-slate-900 group-hover:text-brand-600 transition-colors">
-                  Teakwood, Brass & Jaali Partitions
-                </h3>
-                <p className="text-xs text-slate-500 mt-1 line-clamp-2">
-                  Warm mustard and terracotta tones, geometric cane screens, and authentic Indian family comfort.
-                </p>
-              </div>
-              <div className="flex items-center justify-between text-xs pt-3 border-t border-slate-100 font-bold text-brand-600">
-                <span>View 3D Inspo & Rates</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </Link>
-
-          {/* Theme Card 3: Office Look */}
-          <Link
-            to="/interior-design"
-            className="group rounded-3xl overflow-hidden border border-slate-200/80 bg-white hover:shadow-xl transition-all duration-300 flex flex-col"
-          >
-            <div className="relative h-56 overflow-hidden bg-slate-100">
-              <img
-                src="/interiors/office_look.jpg"
-                alt="Executive Home Office Look"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <span className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-950/70 backdrop-blur-md text-white text-xs font-bold">
-                💼 Executive Office Look
-              </span>
-            </div>
-            <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-              <div>
-                <h3 className="text-base font-bold text-slate-900 group-hover:text-brand-600 transition-colors">
-                  Acoustic Slats & Ergonomic Study
-                </h3>
-                <p className="text-xs text-slate-500 mt-1 line-clamp-2">
-                  Dark walnut wall panels, floating bookshelves, anti-glare task lighting, and executive study desks.
-                </p>
-              </div>
-              <div className="flex items-center justify-between text-xs pt-3 border-t border-slate-100 font-bold text-brand-600">
-                <span>View 3D Inspo & Rates</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </Link>
-        </div>
-      </section>
-
       {/* TOP VERIFIED TECHNICIANS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-8">
@@ -440,6 +291,269 @@ export const Home: React.FC = () => {
               onSelect={() => navigate(`/services`)}
             />
           ))}
+        </div>
+      </section>
+
+      {/* EXPLORE MORE OF OUR SERVICES (SPECIALIZED LIFESTYLE & EVENT SERVICES) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="mb-8">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-xs font-bold text-brand-800 mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-brand-600" />
+            <span>Specialized Services</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Explore More of Our Services
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
+            Tailored lifestyle solutions, smart utility calculators, and verified experts for your home.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Card 1: Smart Electricity Bill Predictor */}
+          <Link
+            to="/bill-predictor"
+            className="group rounded-3xl overflow-hidden border border-slate-200/90 bg-white hover:border-amber-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+          >
+            <div>
+              <div className="relative h-44 overflow-hidden bg-gradient-to-br from-amber-500 via-orange-500 to-amber-700 p-5 flex flex-col justify-between text-slate-950">
+                <div className="flex items-center justify-between">
+                  <span className="px-2.5 py-1 rounded-lg bg-slate-950/80 text-amber-300 text-[10px] font-black uppercase tracking-wider backdrop-blur-md">
+                    Tariff Engine
+                  </span>
+                  <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-slate-950 shadow-inner group-hover:scale-110 transition-transform">
+                    <Zap className="w-4 h-4 fill-slate-950" />
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-black text-white leading-tight drop-shadow-sm">
+                    Electricity Bill Predictor
+                  </h3>
+                  <span className="text-xs text-amber-100 font-medium block mt-0.5">
+                    Forecast bills & split rent in ₹
+                  </span>
+                </div>
+              </div>
+
+              {/* Clear Options Checklist */}
+              <div className="p-5 space-y-2.5">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                  Included Capabilities
+                </span>
+                <ul className="space-y-2 text-xs text-slate-700">
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                    <span>Live State DISCOM Tariff Slabs</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                    <span>AC & Appliance Hourly Simulator</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                    <span>1-Click WhatsApp Roommate Split</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-5 pt-0">
+              <div className="py-2.5 px-4 rounded-xl bg-amber-50 group-hover:bg-amber-500 text-amber-800 group-hover:text-slate-950 font-bold text-xs transition-colors flex items-center justify-between">
+                <span>Calculate My Bill</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Card 2: Bespoke Event Planner */}
+          <Link
+            to="/event-planner"
+            className="group rounded-3xl overflow-hidden border border-slate-200/90 bg-white hover:border-rose-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+          >
+            <div>
+              <div className="relative h-44 overflow-hidden bg-slate-900">
+                <img
+                  src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600"
+                  alt="Event Planner"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                  <span className="px-2.5 py-1 rounded-lg bg-rose-600/90 text-white text-[10px] font-black uppercase tracking-wider backdrop-blur-md">
+                    Planning Studio
+                  </span>
+                  <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white shadow-inner group-hover:scale-110 transition-transform">
+                    <Calendar className="w-4 h-4" />
+                  </div>
+                </div>
+
+                <div className="absolute bottom-3 left-4 right-4 text-white">
+                  <h3 className="text-lg font-black leading-tight drop-shadow-sm">
+                    Bespoke Event Planner
+                  </h3>
+                  <span className="text-xs text-rose-200 font-medium block mt-0.5">
+                    Plan celebrations in 4 simple steps
+                  </span>
+                </div>
+              </div>
+
+              {/* Clear Options Checklist */}
+              <div className="p-5 space-y-2.5">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                  Included Capabilities
+                </span>
+                <ul className="space-y-2 text-xs text-slate-700">
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                    <span>Custom Event Questionnaire</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                    <span>Live Dynamic Budget Calculator</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                    <span>Theme Decor & Stage Production</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-5 pt-0">
+              <div className="py-2.5 px-4 rounded-xl bg-rose-50 group-hover:bg-rose-600 text-rose-800 group-hover:text-white font-bold text-xs transition-colors flex items-center justify-between">
+                <span>Start Event Questionnaire</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Card 3: Gourmet Caterers */}
+          <Link
+            to="/caterers"
+            className="group rounded-3xl overflow-hidden border border-slate-200/90 bg-white hover:border-amber-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+          >
+            <div>
+              <div className="relative h-44 overflow-hidden bg-slate-900">
+                <img
+                  src="https://images.unsplash.com/photo-1555244162-803834f70033?w=600"
+                  alt="Gourmet Caterers"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                  <span className="px-2.5 py-1 rounded-lg bg-amber-600/90 text-white text-[10px] font-black uppercase tracking-wider backdrop-blur-md">
+                    Gourmet Dining
+                  </span>
+                  <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white shadow-inner group-hover:scale-110 transition-transform">
+                    <Utensils className="w-4 h-4" />
+                  </div>
+                </div>
+
+                <div className="absolute bottom-3 left-4 right-4 text-white">
+                  <h3 className="text-lg font-black leading-tight drop-shadow-sm">
+                    Gourmet Caterers
+                  </h3>
+                  <span className="text-xs text-amber-200 font-medium block mt-0.5">
+                    Banquet menus & live stalls
+                  </span>
+                </div>
+              </div>
+
+              {/* Clear Options Checklist */}
+              <div className="p-5 space-y-2.5">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                  Included Capabilities
+                </span>
+                <ul className="space-y-2 text-xs text-slate-700">
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                    <span>Real Banquet & Food Setup Photos</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                    <span>Verified Instagram Profiles & Reels</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                    <span>Complimentary Tasting Sessions</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-5 pt-0">
+              <div className="py-2.5 px-4 rounded-xl bg-amber-50 group-hover:bg-amber-600 text-amber-800 group-hover:text-white font-bold text-xs transition-colors flex items-center justify-between">
+                <span>Browse Caterers & Menus</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Card 4: Architectural Interior Design & Renovation */}
+          <Link
+            to="/interior-design"
+            className="group rounded-3xl overflow-hidden border border-slate-200/90 bg-white hover:border-brand-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+          >
+            <div>
+              <div className="relative h-44 overflow-hidden bg-slate-900">
+                <img
+                  src="/interiors/simple_minimalist.jpg"
+                  alt="Interior Design"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                  <span className="px-2.5 py-1 rounded-lg bg-brand-600/90 text-white text-[10px] font-black uppercase tracking-wider backdrop-blur-md">
+                    Turnkey Studio
+                  </span>
+                  <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white shadow-inner group-hover:scale-110 transition-transform">
+                    <Palette className="w-4 h-4" />
+                  </div>
+                </div>
+
+                <div className="absolute bottom-3 left-4 right-4 text-white">
+                  <h3 className="text-lg font-black leading-tight drop-shadow-sm">
+                    Interior Design & Makeover
+                  </h3>
+                  <span className="text-xs text-brand-200 font-medium block mt-0.5">
+                    See real work before booking
+                  </span>
+                </div>
+              </div>
+
+              {/* Clear Options Checklist */}
+              <div className="p-5 space-y-2.5">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                  Included Capabilities
+                </span>
+                <ul className="space-y-2 text-xs text-slate-700">
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-brand-500 shrink-0" />
+                    <span>Completed Flat Handover Portfolios</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-brand-500 shrink-0" />
+                    <span>Interactive 3D Architectural Renders</span>
+                  </li>
+                  <li className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-brand-500 shrink-0" />
+                    <span>Free Designer Site Consultation</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-5 pt-0">
+              <div className="py-2.5 px-4 rounded-xl bg-brand-50 group-hover:bg-brand-600 text-brand-800 group-hover:text-white font-bold text-xs transition-colors flex items-center justify-between">
+                <span>View Portfolios & Designs</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </Link>
         </div>
       </section>
     </div>

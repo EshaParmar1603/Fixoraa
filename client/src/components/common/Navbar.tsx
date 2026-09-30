@@ -19,7 +19,9 @@ import {
   ChevronDown,
   Calculator,
   Zap,
-  Palette
+  Palette,
+  Utensils,
+  Sparkles
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useSocket } from '../../context/SocketContext';
@@ -60,16 +62,22 @@ export const Navbar: React.FC = () => {
     else navigate('/');
   };
 
+  const [specialMenuOpen, setSpecialMenuOpen] = useState(false);
+
+  const specialServices = [
+    { name: 'Event Planner', path: '/event-planner', icon: Sparkles, desc: 'Questionnaire & budget calculator' },
+    { name: 'Gourmet Caterers', path: '/caterers', icon: Utensils, desc: 'Menus, Instagram reels & tastings' },
+    { name: 'Interior Design', path: '/interior-design', icon: Palette, desc: 'Inspect real portfolios before booking' },
+    { name: 'Bill Predictor', path: '/bill-predictor', icon: Calculator, desc: 'Live DISCOM rates & rent split' },
+  ];
+
+  const isSpecialActive = specialServices.some((s) => location.pathname === s.path);
+
   const navLinks = isCustomer
     ? [
         { name: 'Services', path: '/services', icon: Layers },
-        { name: 'Interior Design', path: '/interior-design', icon: Palette },
-        { name: 'Bill Predictor', path: '/bill-predictor', icon: Calculator },
         { name: 'My Bookings', path: '/my-bookings', icon: Calendar },
         { name: 'Appliances', path: '/appliances', icon: Tv },
-        { name: 'Warranties', path: '/warranties', icon: FileText },
-        { name: 'Favorites', path: '/favorites', icon: Heart },
-        { name: 'Complaints', path: '/complaints', icon: AlertCircle },
       ]
     : isProvider
     ? [
@@ -87,8 +95,6 @@ export const Navbar: React.FC = () => {
       ]
     : [
         { name: 'Explore Services', path: '/services', icon: Layers },
-        { name: 'Interior Design', path: '/interior-design', icon: Palette },
-        { name: 'Bill Predictor', path: '/bill-predictor', icon: Calculator },
       ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -150,6 +156,59 @@ export const Navbar: React.FC = () => {
                 </Link>
               );
             })}
+
+            {/* Special Services Dropdown for Lifestyle & Events */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setSpecialMenuOpen(!specialMenuOpen)}
+                onBlur={() => setTimeout(() => setSpecialMenuOpen(false), 200)}
+                className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  isSpecialActive || specialMenuOpen
+                    ? 'bg-brand-50 text-brand-700 font-semibold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                }`}
+              >
+                <Sparkles className="w-4 h-4 text-brand-600 opacity-90" />
+                <span>Lifestyle & Events</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${specialMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {specialMenuOpen && (
+                <div className="absolute left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 mb-1">
+                    Specialized Services
+                  </div>
+                  {specialServices.map((service) => {
+                    const Icon = service.icon;
+                    return (
+                      <Link
+                        key={service.name}
+                        to={service.path}
+                        onClick={() => setSpecialMenuOpen(false)}
+                        className={`flex items-start space-x-3 p-2.5 rounded-xl transition-all ${
+                          isActive(service.path)
+                            ? 'bg-brand-50 text-brand-700 font-semibold'
+                            : 'hover:bg-slate-50 text-slate-700'
+                        }`}
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 mt-0.5">
+                          <Icon className="w-4 h-4 text-slate-700" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-slate-900 leading-tight">
+                            {service.name}
+                          </p>
+                          <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
+                            {service.desc}
+                          </p>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </nav>
 
           {/* Right Action Icons & User Menu */}
@@ -347,6 +406,33 @@ export const Navbar: React.FC = () => {
                 </Link>
               );
             })}
+          </div>
+
+          {/* Lifestyle & Events Section for Mobile */}
+          <div className="pt-2 border-t border-slate-100">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+              Lifestyle & Events
+            </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {specialServices.map((service) => {
+                const Icon = service.icon;
+                return (
+                  <Link
+                    key={service.name}
+                    to={service.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center space-x-2 px-3 py-2 rounded-xl text-xs font-semibold ${
+                      isActive(service.path)
+                        ? 'bg-brand-50 text-brand-700'
+                        : 'text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 text-brand-600 shrink-0" />
+                    <span>{service.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

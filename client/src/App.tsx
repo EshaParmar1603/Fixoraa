@@ -21,6 +21,8 @@ import { Favorites } from './pages/customer/Favorites';
 import { Complaints } from './pages/customer/Complaints';
 import { BillPredictor } from './pages/customer/BillPredictor';
 import { InteriorDesign } from './pages/customer/InteriorDesign';
+import { EventPlanner } from './pages/customer/EventPlanner';
+import { Caterers } from './pages/customer/Caterers';
 
 // Provider Pages
 import { ProviderDashboard } from './pages/provider/ProviderDashboard';
@@ -110,6 +112,8 @@ export const App: React.FC = () => {
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/bill-predictor" element={<BillPredictor />} />
           <Route path="/interior-design" element={<InteriorDesign />} />
+          <Route path="/event-planner" element={<EventPlanner />} />
+          <Route path="/caterers" element={<Caterers />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 

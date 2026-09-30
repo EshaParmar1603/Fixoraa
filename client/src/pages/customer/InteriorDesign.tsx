@@ -25,7 +25,9 @@ import {
   Compass,
   MapPin,
   Download,
-  Building
+  Building,
+  Eye,
+  ExternalLink
 } from 'lucide-react';
 import { formatINR, INDIAN_CITIES_DISCOM } from '../../utils/formatters';
 
@@ -121,6 +123,17 @@ const DESIGN_THEMES: DesignTheme[] = [
   },
 ];
 
+export interface InteriorProject {
+  title: string;
+  scope: string;
+  area: string;
+  budget: string;
+  duration: string;
+  image: string;
+  highlights: string[];
+  clientReview: string;
+}
+
 interface DesignerProfile {
   id: string;
   name: string;
@@ -134,6 +147,7 @@ interface DesignerProfile {
   consultationFee: number; // in ₹ (0 for initial Fixora consultation)
   awards: string;
   phone: string;
+  portfolioProjects: InteriorProject[];
 }
 
 const CERTIFIED_DESIGNERS: DesignerProfile[] = [
@@ -150,6 +164,28 @@ const CERTIFIED_DESIGNERS: DesignerProfile[] = [
     consultationFee: 0,
     awards: 'IIID National Design Winner 2024',
     phone: '+91 98451 22345',
+    portfolioProjects: [
+      {
+        title: 'Suncity 3BHK Scandinavian Overhaul',
+        scope: 'Turnkey Living & Modular Kitchen',
+        area: '1,550 Sq.Ft',
+        budget: '₹18.5 Lakhs',
+        duration: '42 Days',
+        image: '/interiors/simple_minimalist.jpg',
+        highlights: ['Fluted light oak TV wall', 'Concealed handleless wardrobes', 'Bouclé fabric sectional'],
+        clientReview: 'Ananya transformed our congested flat into an airy Scandinavian haven. Delivered 3 days before schedule!'
+      },
+      {
+        title: 'Indiranagar Tech Executive Study & Home',
+        scope: 'Acoustic Home Office & Master Bed',
+        area: '1,200 Sq.Ft',
+        budget: '₹14.2 Lakhs',
+        duration: '35 Days',
+        image: '/interiors/office_look.jpg',
+        highlights: ['Acoustic slatted walnut panels', 'Dual monitor study desk', 'Dimmable 3000K warm wash'],
+        clientReview: 'The study is dead silent for Zoom calls and looks like a boutique high-end studio.'
+      }
+    ]
   },
   {
     id: 'des-2',
@@ -164,6 +200,18 @@ const CERTIFIED_DESIGNERS: DesignerProfile[] = [
     consultationFee: 0,
     awards: 'AD50 Most Influential Indian Architect',
     phone: '+91 98200 44567',
+    portfolioProjects: [
+      {
+        title: 'Hiranandani Teak & Brass Heritage Flat',
+        scope: 'Complete 3BHK Modest Contemporary',
+        area: '1,680 Sq.Ft',
+        budget: '₹22.5 Lakhs',
+        duration: '50 Days',
+        image: '/interiors/modest_indian.jpg',
+        highlights: ['Solid teak cane partitions', 'Carved brass temple niche', 'Ivory Italian floor polish'],
+        clientReview: 'Vikramaditya balanced our traditional family roots with contemporary clean lines brilliantly.'
+      }
+    ]
   },
   {
     id: 'des-3',
@@ -178,6 +226,18 @@ const CERTIFIED_DESIGNERS: DesignerProfile[] = [
     consultationFee: 0,
     awards: 'Ergonomic Home Workplace Certified',
     phone: '+91 99890 88712',
+    portfolioProjects: [
+      {
+        title: 'Jubilee Hills Duplex Executive Workspace',
+        scope: 'Loft Study & Modular Kitchen',
+        area: '2,100 Sq.Ft',
+        budget: '₹26.0 Lakhs',
+        duration: '45 Days',
+        image: '/interiors/office_look.jpg',
+        highlights: ['Acoustic wood slats', 'Custom floating shelves', 'Anti-glare architectural lighting'],
+        clientReview: 'Priya understands ergonomics like no other. My productivity at home has doubled.'
+      }
+    ]
   },
   {
     id: 'des-4',
@@ -192,6 +252,18 @@ const CERTIFIED_DESIGNERS: DesignerProfile[] = [
     consultationFee: 0,
     awards: 'Turnkey Renovation Excellence Award',
     phone: '+91 98110 99823',
+    portfolioProjects: [
+      {
+        title: 'Gurugram Luxury Modular Kitchen & Dining',
+        scope: 'Turnkey Kitchen & Bar Renovation',
+        area: '900 Sq.Ft Kitchen Space',
+        budget: '₹16.8 Lakhs',
+        duration: '28 Days',
+        image: '/interiors/renovation_kitchen.jpg',
+        highlights: ['Calacatta gold quartz', 'Sage green matte acrylic', 'Blum soft close tandem'],
+        clientReview: 'The kitchen looks straight out of an Architectural Digest magazine. Flawless finish.'
+      }
+    ]
   },
 ];
 
@@ -222,6 +294,9 @@ export const InteriorDesign: React.FC = () => {
   const [clientName, setClientName] = useState<string>('');
   const [clientPhone, setClientPhone] = useState<string>('');
   const [consultationDate, setConsultationDate] = useState<string>('');
+
+  // Portfolio Viewer Modal
+  const [selectedPortfolioDesigner, setSelectedPortfolioDesigner] = useState<DesignerProfile | null>(null);
 
   const navigate = useNavigate();
 
@@ -927,6 +1002,15 @@ export const InteriorDesign: React.FC = () => {
               <div className="space-y-2.5 pt-2">
                 <button
                   type="button"
+                  onClick={() => setSelectedPortfolioDesigner(allocatedDesigner)}
+                  className="w-full py-2.5 px-4 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-2xl text-xs font-bold transition-all flex items-center justify-center space-x-2 shadow-sm"
+                >
+                  <Eye className="w-4 h-4 text-amber-600" />
+                  <span>See {allocatedDesigner.name.split(' ')[0]}'s Past Work & Portfolio</span>
+                </button>
+
+                <button
+                  type="button"
                   onClick={() => setShowConsultationModal(true)}
                   className="w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 text-white rounded-2xl text-xs sm:text-sm font-bold shadow-md transition-all flex items-center justify-center space-x-2"
                 >
@@ -944,6 +1028,102 @@ export const InteriorDesign: React.FC = () => {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* ======================================================== */}
+        {/* DESIGNER PORTFOLIOS & REAL COMPLETED PROJECTS SHOWCASE */}
+        {/* ======================================================== */}
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-8 sm:p-10 shadow-sm space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-xs font-bold text-amber-800 mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                <span>Verified Handover Portfolios</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                Inspect Real Handover Projects Before Booking
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                Browse through high-res photos, budgets, and client reviews of real apartments designed by our certified architects.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {CERTIFIED_DESIGNERS.map((designer) => (
+              <div
+                key={designer.id}
+                className="rounded-2xl border border-slate-200 overflow-hidden bg-slate-50 hover:shadow-lg transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="relative h-56 overflow-hidden bg-slate-900">
+                    <img
+                      src={designer.portfolioProjects[0]?.image || designer.avatar}
+                      alt={designer.name}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+                    <div className="absolute bottom-3 left-4 right-4 text-white flex items-end justify-between">
+                      <div>
+                        <h4 className="font-black text-base">{designer.portfolioProjects[0]?.title}</h4>
+                        <span className="text-xs text-slate-300">{designer.portfolioProjects[0]?.scope} • {designer.city}</span>
+                      </div>
+                      <span className="text-xs font-black text-amber-300">{designer.portfolioProjects[0]?.budget}</span>
+                    </div>
+                  </div>
+
+                  <div className="p-5 space-y-3">
+                    <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+                      <div className="flex items-center space-x-2.5">
+                        <img src={designer.avatar} alt={designer.name} className="w-8 h-8 rounded-xl object-cover" />
+                        <div>
+                          <h5 className="font-bold text-xs text-slate-900">{designer.name}</h5>
+                          <span className="text-[10px] text-brand-600 font-semibold">{designer.firm}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center text-xs font-bold text-slate-900">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 mr-1" />
+                        {designer.rating}
+                      </div>
+                    </div>
+
+                    <p className="text-xs text-slate-600 italic">
+                      "{designer.portfolioProjects[0]?.clientReview}"
+                    </p>
+
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {designer.portfolioProjects[0]?.highlights.map((h, i) => (
+                        <span key={i} className="px-2 py-0.5 rounded-md bg-white border border-slate-200 text-[10px] font-semibold text-slate-700">
+                          ✓ {h}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-5 pt-0 flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPortfolioDesigner(designer)}
+                    className="flex-1 py-2.5 px-3 bg-white hover:bg-brand-50 text-brand-700 border border-brand-200 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1.5 shadow-sm"
+                  >
+                    <Eye className="w-3.5 h-3.5 text-brand-600" />
+                    <span>See All Work & Gallery</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedThemeId(designer.specialization[0]);
+                      setShowConsultationModal(true);
+                    }}
+                    className="py-2.5 px-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors"
+                  >
+                    Book Consultation
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -1066,6 +1246,97 @@ export const InteriorDesign: React.FC = () => {
                 </div>
               </form>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* PORTFOLIO VIEWER MODAL */}
+      {selectedPortfolioDesigner && (
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto animate-in zoom-in-95">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div className="flex items-center space-x-3">
+                <img
+                  src={selectedPortfolioDesigner.avatar}
+                  alt={selectedPortfolioDesigner.name}
+                  className="w-12 h-12 rounded-2xl object-cover ring-2 ring-brand-100"
+                />
+                <div>
+                  <span className="text-[11px] font-bold text-brand-600 uppercase tracking-wider">
+                    Architect Portfolio & Real Completed Work
+                  </span>
+                  <h3 className="text-xl font-black text-slate-900">
+                    {selectedPortfolioDesigner.name} ({selectedPortfolioDesigner.firm})
+                  </h3>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedPortfolioDesigner(null)}
+                className="text-slate-400 hover:text-slate-600 font-bold text-lg"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              {selectedPortfolioDesigner.portfolioProjects.map((project, idx) => (
+                <div key={idx} className="bg-slate-50 rounded-2xl p-5 border border-slate-200/80 space-y-4">
+                  <div className="relative h-64 overflow-hidden rounded-xl bg-slate-900">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-3 left-3 px-3 py-1 rounded-lg bg-slate-950/75 text-white text-xs font-bold backdrop-blur-md">
+                      {project.scope}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <h4 className="text-base font-bold text-slate-900">{project.title}</h4>
+                      <span className="text-xs text-slate-500">{project.area} • Handover in {project.duration}</span>
+                    </div>
+                    <span className="text-sm font-black text-brand-600 bg-brand-50 px-3 py-1 rounded-xl border border-brand-200">
+                      Total Cost: {project.budget}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-slate-600 leading-relaxed bg-white p-3 rounded-xl border border-slate-100">
+                    <strong className="text-slate-800">Homeowner Feedback:</strong> "{project.clientReview}"
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    {project.highlights.map((h, i) => (
+                      <span key={i} className="px-2.5 py-1 bg-white rounded-lg border border-slate-200 text-slate-700 text-[11px] font-semibold">
+                        ✓ {h}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-2 flex items-center justify-end space-x-3 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setSelectedPortfolioDesigner(null)}
+                className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+              >
+                Close Portfolio
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedPortfolioDesigner(null);
+                  setShowConsultationModal(true);
+                }}
+                className="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md transition-colors"
+              >
+                Book Free Consultation With {selectedPortfolioDesigner.name.split(' ')[0]}
+              </button>
+            </div>
           </div>
         </div>
       )}
