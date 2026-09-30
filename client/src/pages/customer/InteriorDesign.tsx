@@ -406,50 +406,82 @@ export const InteriorDesign: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/70 pb-24 pt-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        {/* ======================================================== */}
-        {/* HERO HEADER */}
-        {/* ======================================================== */}
-        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white p-8 sm:p-12 shadow-2xl border border-slate-800">
-          <div className="absolute top-0 right-0 p-12 opacity-15 pointer-events-none">
-            <Compass className="w-80 h-80 text-brand-400" />
+    <div className="min-h-screen bg-slate-50/70 pb-24">
+      {/* ======================================================== */}
+      {/* HERO SECTION (MATCHING HOME & USER INSPIRATION) */}
+      {/* ======================================================== */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-950 via-slate-900 to-slate-900 text-white pt-20 pb-28 px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#818cf8_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div className="max-w-7xl mx-auto relative z-10 text-center space-y-8">
+          {/* Eyebrow badge */}
+          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-brand-200">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>AI Interior Design Studio & Turnkey Renovation</span>
           </div>
 
-          <div className="relative z-10 max-w-3xl space-y-4">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-amber-300">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>AI Interior Design Studio & Turnkey Renovation</span>
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight max-w-4xl mx-auto leading-tight">
+            Design Your Dream Interior With{' '}
+            <span className="bg-gradient-to-r from-brand-400 via-indigo-300 to-teal-300 bg-clip-text text-transparent">
+              Certified Architects & AI
+            </span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+            Whether furnishing a new flat or renovating your current space: explore signature design themes, compute real-time per-sq.ft costs, generate instant AI 3D renders, and match with verified architects.
+          </p>
+
+          {/* Quick Categories / Themes Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-xs font-medium text-slate-300">
+            <span className="text-slate-400">Signature Themes:</span>
+            {DESIGN_THEMES.map((theme) => (
+              <button
+                key={theme.id}
+                onClick={() => {
+                  setSelectedThemeId(theme.id);
+                  const el = document.getElementById('studio-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className={`px-3.5 py-1.5 rounded-full transition-all border text-xs font-medium ${
+                  selectedThemeId === theme.id
+                    ? 'bg-amber-500/20 border-amber-400 text-amber-300 shadow-md shadow-amber-500/10 font-bold'
+                    : 'bg-white/10 hover:bg-white/20 border-white/10 text-slate-200'
+                }`}
+              >
+                {theme.name}
+              </button>
+            ))}
+            <button
+              onClick={() => setShowConsultationModal(true)}
+              className="px-4 py-1.5 rounded-full bg-brand-600 hover:bg-brand-500 text-white font-bold transition-all border border-brand-500 shadow-md flex items-center space-x-1"
+            >
+              <span>Book Free Consultation</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* Stats Strip */}
+          <div className="max-w-5xl mx-auto mt-16 pt-8 border-t border-slate-800 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+              <span className="text-2xl sm:text-3xl font-black text-white">4.9/5</span>
+              <span className="block text-xs text-slate-400 mt-1">Architect Quality Rating</span>
             </div>
-
-            <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
-              Design Your Dream Interior With{' '}
-              <span className="bg-gradient-to-r from-amber-300 via-brand-300 to-teal-300 bg-clip-text text-transparent">
-                Allocated Architects
-              </span>
-            </h1>
-
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-              Whether furnishing a <strong>Brand New Home</strong> or planning a{' '}
-              <strong>Turnkey Renovation</strong>, choose your signature theme (Modest, Simple, Office Look), calculate exact costs per sq.ft, generate instant AI design inspiration, and get matched with certified interior specialists.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-6 pt-3 text-xs text-slate-300 font-semibold">
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Zero Inspection / Initial Consultation Fee</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>BWP Grade 710 Plywood 10-Yr Warranty</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>45-Day Move-in Guarantee</span>
-              </div>
+            <div>
+              <span className="text-2xl sm:text-3xl font-black text-white">100%</span>
+              <span className="block text-xs text-slate-400 mt-1">Verified Council Architects</span>
+            </div>
+            <div>
+              <span className="text-2xl sm:text-3xl font-black text-white">45 Days</span>
+              <span className="block text-xs text-slate-400 mt-1">Guaranteed Move-In Handover</span>
+            </div>
+            <div>
+              <span className="text-2xl sm:text-3xl font-black text-white">10 Years</span>
+              <span className="block text-xs text-slate-400 mt-1">BWP 710 Grade Plywood Warranty</span>
             </div>
           </div>
         </div>
+      </section>
+
+      <div id="studio-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
         {/* ======================================================== */}
         {/* INTERACTIVE 2-COLUMN DESIGN STUDIO */}

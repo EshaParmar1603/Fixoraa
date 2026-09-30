@@ -583,48 +583,87 @@ ${hasSolar ? `☀️ *Rooftop Solar Offset:* -${Math.round(monthlySolarUnits)} k
   }, [applianceCalculations, selectedCategoryTab]);
 
   return (
-    <div className="min-h-screen bg-slate-50/60 pb-24 pt-8">
-      {/* Top Breadcrumb & Title */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800 mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Real-Time Indian Discom & Flat Share Engine</span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              Smart Bill & Flatmate Share Predictor
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-3xl">
-              Forecast your exact electricity bill, simulate rooftop solar generation savings, and divide rent & shared utilities transparently across flatmates.
-            </p>
+    <div className="min-h-screen bg-slate-50/60 pb-24">
+      {/* ======================================================== */}
+      {/* HERO SECTION (MATCHING HOME & USER INSPIRATION) */}
+      {/* ======================================================== */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-950 via-slate-900 to-slate-900 text-white pt-20 pb-28 px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div className="max-w-7xl mx-auto relative z-10 text-center space-y-8">
+          {/* Eyebrow badge */}
+          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-emerald-300">
+            <Zap className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Real-Time Indian DISCOM Tariff & Flatmate Share Engine</span>
           </div>
 
-          {/* Quick Preset Buttons */}
-          <div className="flex items-center space-x-2 bg-white p-1.5 rounded-2xl border border-slate-200/90 shadow-sm text-xs font-bold">
-            <span className="text-slate-400 pl-2 pr-1 text-[11px] uppercase tracking-wider font-semibold">
-              Presets:
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight max-w-4xl mx-auto leading-tight">
+            Predict Electricity Bills &{' '}
+            <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-300 bg-clip-text text-transparent">
+              Split Flat Expenses Fairly
             </span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+            Forecast real-time power bills across 14+ Indian DISCOMs (BESCOM, MSEDCL, BSES, TANGEDCO), simulate rooftop solar net-metering offsets, and divide rent & shared utilities transparently across flatmates.
+          </p>
+
+          {/* Quick Presets Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-xs font-medium text-slate-300">
+            <span className="text-slate-400">Quick Presets:</span>
             <button
               onClick={() => handleLoadPreset('1bhk')}
-              className="px-3 py-1.5 rounded-xl hover:bg-slate-100 text-slate-700 transition-colors"
+              className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-all border border-white/10 text-slate-200"
             >
-              1 BHK
+              🏢 1 BHK Studio
             </button>
             <button
               onClick={() => handleLoadPreset('2bhk')}
-              className="px-3 py-1.5 rounded-xl hover:bg-slate-100 text-slate-700 transition-colors"
+              className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-all border border-white/10 text-slate-200"
             >
-              2 BHK
+              🏡 2 BHK Family
             </button>
             <button
               onClick={() => handleLoadPreset('3bhk')}
-              className="px-3 py-1.5 rounded-xl bg-brand-50 text-brand-700 border border-brand-200/60"
+              className="px-3.5 py-1.5 rounded-full bg-emerald-500/20 border-emerald-400 text-emerald-300 transition-all border font-semibold shadow-md shadow-emerald-500/10"
             >
-              3 BHK Shared
+              👥 3 BHK Shared Flat
+            </button>
+            <button
+              onClick={() => setHasSolar(!hasSolar)}
+              className={`px-3.5 py-1.5 rounded-full transition-all border font-medium ${
+                hasSolar
+                  ? 'bg-amber-500/20 border-amber-400 text-amber-300 shadow-md shadow-amber-500/10'
+                  : 'bg-white/10 hover:bg-white/20 border-white/10 text-slate-200'
+              }`}
+            >
+              ☀️ {hasSolar ? 'Solar Net-Metering: Active' : 'Enable Rooftop Solar'}
             </button>
           </div>
+
+          {/* Stats Strip */}
+          <div className="max-w-5xl mx-auto mt-16 pt-8 border-t border-slate-800 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+              <span className="text-2xl sm:text-3xl font-black text-white">14+ DISCOMs</span>
+              <span className="block text-xs text-slate-400 mt-1">Slab Tariffs (BESCOM, BSES, MSEDCL)</span>
+            </div>
+            <div>
+              <span className="text-2xl sm:text-3xl font-black text-white">₹0 Hidden</span>
+              <span className="block text-xs text-slate-400 mt-1">Exact Fixed & Energy Charges</span>
+            </div>
+            <div>
+              <span className="text-2xl sm:text-3xl font-black text-white">Live Wattage</span>
+              <span className="block text-xs text-slate-400 mt-1">35+ Preset Home Appliances</span>
+            </div>
+            <div>
+              <span className="text-2xl sm:text-3xl font-black text-white">1-Click Split</span>
+              <span className="block text-xs text-slate-400 mt-1">WhatsApp Flatmate Summary</span>
+            </div>
+          </div>
         </div>
+      </section>
+
+      {/* Main Content Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
         {/* ======================================================== */}
         {/* TOP LEVEL LIVE METRIC CARDS */}
