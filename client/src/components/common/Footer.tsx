@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Wrench, ShieldCheck, Clock, Award, CheckCircle2, Zap } from 'lucide-react';
+import { ShieldCheck, Clock, Award, CheckCircle2, Zap } from 'lucide-react';
 import { useSocket } from '../../context/SocketContext';
 
 export const Footer: React.FC = () => {
@@ -56,12 +56,13 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 py-12">
           {/* Col 1: Brand & Health */}
           <div className="md:col-span-2 space-y-4">
-            <div className="flex items-center space-x-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white">
-                <Wrench className="w-4 h-4" />
-              </div>
-              <span className="text-xl font-black text-white tracking-tight">Fixora</span>
-            </div>
+            <Link to="/" className="inline-block group">
+              <img
+                src="/citylink-footer-logo.png"
+                alt="CityLink - Your City, Your Services"
+                className="h-16 sm:h-20 w-auto rounded-2xl shadow-xl border border-slate-800/80 group-hover:border-teal-500/50 transition-all object-contain bg-slate-950/40"
+              />
+            </Link>
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
               The premier ecosystem connecting homeowners with background-verified appliance technicians, automated service schedules, and tamper-proof digital warranty vault.
             </p>
@@ -75,35 +76,35 @@ export const Footer: React.FC = () => {
 
           {/* Col 2: Services */}
           <div>
-            <h5 className="text-white font-bold text-sm mb-4">Core Services</h5>
+            <h5 className="text-white font-bold text-sm mb-4">Appliance Repairs</h5>
             <ul className="space-y-2.5 text-xs text-slate-400">
               <li><Link to="/services?category=ac-cooling" className="hover:text-white transition-colors">AC Repair & Jet Pump</Link></li>
               <li><Link to="/services?category=refrigeration" className="hover:text-white transition-colors">Refrigerator Servicing</Link></li>
               <li><Link to="/services?category=washing-machine" className="hover:text-white transition-colors">Washing Machine Repair</Link></li>
-              <li><Link to="/services?category=kitchen-appliances" className="hover:text-white transition-colors">Microwave & Chimneys</Link></li>
+              <li><Link to="/services?category=kitchen-appliances" className="hover:text-white transition-colors">Kitchen & Microwave</Link></li>
               <li><Link to="/services?category=water-purifier" className="hover:text-white transition-colors">RO Water Purifiers</Link></li>
             </ul>
           </div>
 
-          {/* Col 3: Platform */}
+          {/* Col 3: Living & Events */}
           <div>
-            <h5 className="text-white font-bold text-sm mb-4">Customer Vault</h5>
+            <h5 className="text-white font-bold text-sm mb-4">Living & Events</h5>
             <ul className="space-y-2.5 text-xs text-slate-400">
-              <li><Link to="/appliances" className="hover:text-white transition-colors">Appliance Registry</Link></li>
-              <li><Link to="/warranties" className="hover:text-white transition-colors">Bill & Warranty Vault</Link></li>
-              <li><Link to="/my-bookings" className="hover:text-white transition-colors">Booking Tracking</Link></li>
-              <li><Link to="/favorites" className="hover:text-white transition-colors">Saved Technicians</Link></li>
-              <li><Link to="/complaints" className="hover:text-white transition-colors">Dispute Resolution</Link></li>
+              <li><Link to="/interior-design" className="hover:text-white transition-colors">AI Interior Design Studio</Link></li>
+              <li><Link to="/caterers" className="hover:text-white transition-colors">Gourmet Caterers & Feasts</Link></li>
+              <li><Link to="/event-planner" className="hover:text-white transition-colors">Luxury Event Planner</Link></li>
+              <li><Link to="/appliances" className="hover:text-white transition-colors">Home Appliance Registry</Link></li>
             </ul>
           </div>
 
-          {/* Col 4: For Providers */}
+          {/* Col 4: Platform & Pro */}
           <div>
-            <h5 className="text-white font-bold text-sm mb-4">Professionals</h5>
+            <h5 className="text-white font-bold text-sm mb-4">Portals & Vault</h5>
             <ul className="space-y-2.5 text-xs text-slate-400">
+              <li><Link to="/my-bookings" className="hover:text-white transition-colors">My Booking Tracking</Link></li>
+              <li><Link to="/warranties" className="hover:text-white transition-colors">Bill & Warranty Vault</Link></li>
               <li><Link to="/provider/dashboard" className="hover:text-white transition-colors">Provider Dashboard</Link></li>
-              <li><Link to="/provider/availability" className="hover:text-white transition-colors">Operating Hours</Link></li>
-              <li><Link to="/register" className="hover:text-white transition-colors">Join Technician Network</Link></li>
+              <li><Link to="/register" className="hover:text-white transition-colors">Join Pro Partner Network</Link></li>
               <li><Link to="/admin/dashboard" className="hover:text-white transition-colors">Admin Supervision</Link></li>
             </ul>
           </div>
@@ -111,7 +112,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 space-y-4 sm:space-y-0">
-          <p>© {new Date().getFullYear()} Fixora Home Services Inc. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} CityLink Services Inc. All rights reserved.</p>
           <div className="flex space-x-6">
             <span className="hover:text-slate-400 cursor-pointer">Terms of Service</span>
             <span className="hover:text-slate-400 cursor-pointer">Privacy Policy</span>

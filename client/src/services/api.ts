@@ -584,29 +584,41 @@ export const authApi = {
         user: {
           id: credentials.email.includes('admin')
             ? 'user-admin-1'
-            : credentials.email.includes('provider')
+            : credentials.email.includes('design')
             ? 'user-prov-1'
+            : credentials.email.includes('cater')
+            ? 'user-prov-cater'
+            : credentials.email.includes('provider')
+            ? 'user-prov-tech'
             : 'user-cust-1',
           email: credentials.email,
           name: credentials.email.includes('admin')
             ? 'Fixora System Admin'
+            : credentials.email.includes('design')
+            ? 'Ar. Ananya Deshmukh (Architect & Designer)'
+            : credentials.email.includes('cater')
+            ? 'Chef Ranveer Brar (Saffron Feasts Catering)'
             : credentials.email.includes('provider')
             ? 'Alex Vance (Technician)'
             : 'Sophia Miller (Customer)',
           role: credentials.email.includes('admin')
             ? ('ADMIN' as Role)
-            : credentials.email.includes('provider')
+            : (credentials.email.includes('provider') || credentials.email.includes('design') || credentials.email.includes('cater'))
             ? ('PROVIDER' as Role)
             : ('CUSTOMER' as Role),
           isActive: true,
-          city: 'New York',
-          avatar: credentials.email.includes('provider')
+          city: 'Bengaluru',
+          avatar: credentials.email.includes('design')
+            ? 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150'
+            : credentials.email.includes('cater')
+            ? 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=150'
+            : credentials.email.includes('provider')
             ? 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150'
             : credentials.email.includes('admin')
             ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'
             : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100',
           createdAt: '2023-01-01',
-          providerProfile: credentials.email.includes('provider') ? mockProviders[0] : null
+          providerProfile: (credentials.email.includes('provider') || credentials.email.includes('design') || credentials.email.includes('cater')) ? mockProviders[0] : null
         },
         token: 'mock-jwt-token-' + Date.now()
       }
@@ -759,8 +771,12 @@ export const bookingsApi = {
   },
 
   createBooking: async (bookingData: any) => {
-    const service = mockServices.find(s => s.id === bookingData.serviceId) || mockServices[0];
-    const provider = mockProviders.find(p => p.id === bookingData.providerId) || mockProviders[0];
+    const service = bookingData.service || mockServices.find(s => s.id === bookingData.serviceId) || mockServices[0];
+    const provider = bookingData.provider || mockProviders.find(p => p.id === bookingData.providerId) || mockProviders[0];
+    const totalPrice = bookingData.totalPrice !== undefined ? bookingData.totalPrice : (service.basePrice || 499);
+    const paymentStatus = bookingData.paymentStatus || 'PENDING';
+    const status = bookingData.status || (paymentStatus === 'PAID' ? 'CONFIRMED' : 'PENDING');
+
     const newBooking: Booking = {
       id: 'book-' + Date.now(),
       bookingNumber: 'FIX-' + Math.floor(100000 + Math.random() * 900000),
@@ -769,14 +785,15 @@ export const bookingsApi = {
       serviceId: service.id,
       scheduledAt: bookingData.scheduledAt,
       address: bookingData.address,
-      city: bookingData.city || 'New York',
+      city: bookingData.city || 'Bengaluru',
       notes: bookingData.notes,
-      totalPrice: service.basePrice,
-      status: 'PENDING',
-      paymentStatus: 'PENDING',
+      totalPrice,
+      status,
+      paymentStatus,
       createdAt: new Date().toISOString(),
       service,
-      provider
+      provider,
+      ...(bookingData.payment ? { payment: bookingData.payment } : {})
     };
     mockBookings = [newBooking, ...mockBookings];
 
@@ -804,24 +821,64 @@ export const bookingsApi = {
 };
 
 export const paymentsApi = {
-  processPayment: async (data: { bookingId: string; amount: number; method: string; currency?: string }) => {
+  createOrder: async (data: { amount: number; currency?: string; bookingId?: string }) => {
+    const orderId = 'order_rzp_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+    return executeApiCall(
+      () => apiClient.post('/payments/create-order', data),
+      {
+        id: orderId,
+        orderId,
+        amount: data.amount,
+        currency: data.currency || 'INR',
+        keyId: 'rzp_test_FixoraDummyKey2026',
+        bookingId: data.bookingId
+      }
+    );
+  },
+
+  processPayment: async (data: {
+    bookingId?: string;
+    amount: number;
+    method?: string;
+    currency?: string;
+    razorpayPaymentId?: string;
+    razorpayOrderId?: string;
+    razorpaySignature?: string;
+    description?: string;
+  }) => {
+    const txnId = data.razorpayPaymentId || ('pay_rzp_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36));
+    const ordId = data.razorpayOrderId || ('order_rzp_' + Math.random().toString(36).substring(2, 9));
+
     const payment: Payment = {
       id: 'pay-' + Date.now(),
-      bookingId: data.bookingId,
+      bookingId: data.bookingId || 'standalone',
       customerId: 'user-cust-1',
       amount: data.amount,
-      currency: data.currency || 'USD',
-      method: data.method as any,
+      currency: data.currency || 'INR',
+      method: (data.method as any) || 'RAZORPAY',
       status: 'PAID',
-      transactionId: 'TXN_' + Date.now() + '_MOCK',
-      mockReceiptUrl: `https://fixora.local/receipts/TXN_${Date.now()}.pdf`,
+      transactionId: txnId,
+      razorpayOrderId: ordId,
+      mockReceiptUrl: `https://fixora.local/receipts/${txnId}.pdf`,
       paidAt: new Date().toISOString(),
       createdAt: new Date().toISOString()
     };
-    mockBookings = mockBookings.map(b => b.id === data.bookingId ? { ...b, paymentStatus: 'PAID' } : b);
+
+    if (data.bookingId) {
+      mockBookings = mockBookings.map(b =>
+        b.id === data.bookingId
+          ? {
+              ...b,
+              paymentStatus: 'PAID',
+              status: b.status === 'PENDING' ? 'CONFIRMED' : b.status,
+              payment
+            }
+          : b
+      );
+    }
 
     return executeApiCall(
-      () => apiClient.post('/payments/process', data),
+      () => apiClient.post('/payments/process', { ...data, razorpayPaymentId: txnId, razorpayOrderId: ordId }),
       payment
     );
   },
@@ -832,10 +889,10 @@ export const paymentsApi = {
       {
         id: 'pay-mock-1',
         bookingId,
-        amount: 49.99,
+        amount: 499,
         status: 'PAID',
-        method: 'CARD',
-        transactionId: 'TXN_SAMPLE_01',
+        method: 'RAZORPAY',
+        transactionId: 'pay_rzp_mock_demo_01',
         createdAt: new Date().toISOString()
       }
     );
@@ -848,10 +905,10 @@ export const paymentsApi = {
         id: 'pay-' + b.id,
         bookingId: b.id,
         amount: b.totalPrice,
-        currency: 'USD',
-        method: 'CARD' as const,
+        currency: 'INR',
+        method: 'RAZORPAY' as const,
         status: 'PAID' as const,
-        transactionId: 'TXN_' + b.bookingNumber,
+        transactionId: 'pay_rzp_' + b.bookingNumber,
         createdAt: b.createdAt,
         booking: b
       }))
@@ -1251,3 +1308,110 @@ export const adminApi = {
     );
   }
 };
+
+// ==========================================
+// 10. LIVE LOCATION TRACKING API
+// ==========================================
+export const trackingApi = {
+  getTrackingSession: async (bookingId: string) => {
+    return executeApiCall(
+      () => apiClient.get(`/tracking/${bookingId}`),
+      {
+        bookingId,
+        technician: {
+          id: 'tech-gps-1',
+          name: 'Rajesh Sharma',
+          phone: '+91 98450 77122',
+          avatar: 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150',
+          rating: 4.92,
+          completedJobs: 340,
+          vehicleModel: 'Hero Electric Optima CX',
+          vehicleNumber: 'KA 03 HL 9824',
+          batteryPercentage: 88,
+          isGpsLive: true
+        },
+        status: 'ON_THE_WAY',
+        stepIndex: 1,
+        currentProgressPercent: 35,
+        currentLat: 12.9742,
+        currentLng: 77.6033,
+        speedKmH: 32,
+        heading: 124,
+        distanceRemainingKm: 2.3,
+        etaMinutes: 8,
+        routeWaypoints: [
+          { lat: 12.9784, lng: 77.5925, landmark: 'Fixora Central Hub, MG Road' },
+          { lat: 12.9742, lng: 77.6033, landmark: 'Trinity Circle Junction' },
+          { lat: 12.9689, lng: 77.6167, landmark: 'Command Hospital Crossing' },
+          { lat: 12.9615, lng: 77.6321, landmark: 'Domlur Flyover Ramp' },
+          { lat: 12.9550, lng: 77.6410, landmark: 'Indiranagar 100ft Road' },
+          { lat: 12.9482, lng: 77.6495, landmark: 'Customer Residential Gate' }
+        ],
+        customerAddress: 'Indiranagar, Bengaluru',
+        lastUpdatedAt: new Date().toISOString()
+      }
+    );
+  },
+
+  updateLocation: async (bookingId: string, data: any) => {
+    return executeApiCall(
+      () => apiClient.post(`/tracking/${bookingId}/update`, data),
+      data
+    );
+  },
+
+  advanceSimulationStep: async (bookingId: string) => {
+    return executeApiCall(
+      () => apiClient.post(`/tracking/${bookingId}/advance-step`),
+      { bookingId, advanced: true }
+    );
+  }
+};
+
+// ==========================================
+// 11. CITYLINK SKILLGRAPH AI API
+// ==========================================
+export const skillGraphApi = {
+  getTemplates: async () => {
+    return executeApiCall(
+      () => apiClient.get('/skillgraph/templates'),
+      {
+        templates: [],
+        roles: {},
+        availableProvidersCount: 10
+      }
+    );
+  },
+
+  optimizeTeam: async (params: {
+    projectType: string;
+    budgetLimit?: number;
+    targetDate?: string;
+    optimizationObjective?: string;
+  }) => {
+    return executeApiCall(
+      () => apiClient.post('/skillgraph/optimize', params),
+      null
+    );
+  },
+
+  bookTeam: async (data: {
+    projectType: string;
+    targetDate: string;
+    notes?: string;
+    bundledPrice: number;
+    teamMembers: any[];
+  }) => {
+    return executeApiCall(
+      () => apiClient.post('/skillgraph/book-team', data),
+      {
+        id: `team-mock-${Date.now()}`,
+        bookingNumber: `FIX-TEAM-998822`,
+        status: 'CONFIRMED',
+        paymentStatus: 'PAID',
+        ...data
+      }
+    );
+  }
+};
+

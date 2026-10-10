@@ -20,7 +20,8 @@ export type PaymentMethod =
   | 'UPI'
   | 'NETBANKING'
   | 'CASH'
-  | 'WALLET';
+  | 'WALLET'
+  | 'RAZORPAY';
 
 export type NotificationType =
   | 'BOOKING'
@@ -236,6 +237,7 @@ export interface Payment {
   method: PaymentMethod;
   status: PaymentStatus;
   transactionId: string;
+  razorpayOrderId?: string | null;
   mockReceiptUrl?: string | null;
   paidAt?: string;
   createdAt: string;
@@ -400,4 +402,133 @@ export interface AdminStats {
   totalRevenue: number;
   pendingComplaints: number;
   recentBookings: Booking[];
+}
+
+// Live Location Tracking Types
+export interface RouteWaypoint {
+  lat: number;
+  lng: number;
+  landmark?: string;
+}
+
+export interface TrackingSession {
+  bookingId: string;
+  technician: {
+    id: string;
+    name: string;
+    phone: string;
+    avatar?: string;
+    rating: number;
+    completedJobs: number;
+    vehicleModel: string;
+    vehicleNumber: string;
+    batteryPercentage: number;
+    isGpsLive: boolean;
+  };
+  status: 'DISPATCHED' | 'ON_THE_WAY' | 'NEAR_DOORSTEP' | 'ARRIVED';
+  stepIndex: number;
+  currentProgressPercent: number;
+  currentLat: number;
+  currentLng: number;
+  speedKmH: number;
+  heading: number;
+  distanceRemainingKm: number;
+  etaMinutes: number;
+  routeWaypoints: RouteWaypoint[];
+  customerAddress: string;
+  lastUpdatedAt: string;
+}
+
+// CityLink SkillGraph Types
+export interface SkillRole {
+  id: string;
+  label: string;
+  color: string;
+  icon: string;
+}
+
+export interface SkillGraphMember {
+  id: string;
+  name: string;
+  role: string;
+  title: string;
+  avatar: string;
+  rating: number;
+  reviews: number;
+  baseRate: number;
+  reliabilityIndex: number;
+  experienceYears: number;
+  city: string;
+  skills: string[];
+  badge: string;
+}
+
+export interface SynergyLink {
+  source: string;
+  target: string;
+  sourceRole: string;
+  targetRole: string;
+  synergy: number; // 0 - 100%
+  coWorkedJobs: number;
+  jointRating: number;
+  notes: string;
+}
+
+export interface GraphNode {
+  id: string;
+  name: string;
+  role: string;
+  roleLabel: string;
+  roleColor: string;
+  avatar: string;
+  rating: number;
+  reviews: number;
+  baseRate: number;
+  badge: string;
+  skills: string[];
+  x: number;
+  y: number;
+}
+
+export interface ProjectTemplate {
+  id: string;
+  name: string;
+  subtitle: string;
+  icon: string;
+  category: string;
+  estimatedHours: number;
+  requiredRoles: string[];
+  dependencies: { from: string; to: string; description: string }[];
+  timelinePhases: { phase: string; role: string; task: string }[];
+}
+
+export interface SkillGraphOptimizationResult {
+  template: ProjectTemplate;
+  bestTeam: {
+    members: SkillGraphMember[];
+    totalIndividualPrice: number;
+    bundledTeamPrice: number;
+    coordinationSavings: number;
+    discountPercent: number;
+    teamSynergyScore: number;
+    teamAvgRating: number;
+    teamReliabilityIndex: number;
+    withinBudget: boolean;
+    requiredDepositToken: number;
+    synergyLinks: SynergyLink[];
+    graphTopology: {
+      nodes: GraphNode[];
+      edges: SynergyLink[];
+    };
+    timelinePhases: { phase: string; role: string; task: string }[];
+    dependencyDAG: { from: string; to: string; description: string }[];
+  };
+  alternativesCount: number;
+  algorithmTelemetry: {
+    candidatesEvaluated: number;
+    graphNodesCount: number;
+    synergyEdgesCount: number;
+    computationTimeMs: number;
+    objective: string;
+  };
 }

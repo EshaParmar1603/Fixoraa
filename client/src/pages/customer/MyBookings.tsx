@@ -15,6 +15,8 @@ import { Booking, BookingStatus } from '../../types';
 import { BookingCard } from '../../components/cards/BookingCard';
 import { LoadingSpinner } from '../../components/common/LoadingSpinner';
 import { EmptyState } from '../../components/common/EmptyState';
+import { RazorpayCheckoutModal } from '../../components/common/RazorpayCheckoutModal';
+import { LiveTrackingModal } from '../../components/tracking/LiveTrackingModal';
 
 export const MyBookings: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -24,6 +26,7 @@ export const MyBookings: React.FC = () => {
   // Modals state
   const [paymentModalBooking, setPaymentModalBooking] = useState<Booking | null>(null);
   const [reviewModalBooking, setReviewModalBooking] = useState<Booking | null>(null);
+  const [trackingModalBooking, setTrackingModalBooking] = useState<Booking | null>(null);
 
   // Payment form state
   const [paymentMethod, setPaymentMethod] = useState<'CARD' | 'UPI' | 'NETBANKING' | 'CASH'>('CARD');
@@ -181,6 +184,7 @@ export const MyBookings: React.FC = () => {
               key={b.id}
               booking={b}
               onPayNow={(booking) => setPaymentModalBooking(booking)}
+              onTrackTechnician={(booking) => setTrackingModalBooking(booking)}
               onWriteReview={(booking) => setReviewModalBooking(booking)}
               onCancel={(id) => handleCancelBooking(id)}
             />
@@ -189,131 +193,36 @@ export const MyBookings: React.FC = () => {
       )}
 
       {/* ==================================================== */}
-      {/* MOCK PAYMENT MODAL */}
+      {/* LIVE TECHNICIAN GPS TRACKING RADAR MODAL */}
+      {/* ==================================================== */}
+      {trackingModalBooking && (
+        <LiveTrackingModal
+          isOpen={Boolean(trackingModalBooking)}
+          onClose={() => setTrackingModalBooking(null)}
+          bookingId={trackingModalBooking.id}
+          bookingNumber={trackingModalBooking.bookingNumber}
+          serviceTitle={trackingModalBooking.service?.name || 'Home Appliance Service'}
+        />
+      )}
+
+      {/* ==================================================== */}
+      {/* RAZORPAY CHECKOUT MODAL */}
       {/* ==================================================== */}
       {paymentModalBooking && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-100 space-y-6">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="text-base font-bold text-slate-900 flex items-center space-x-2">
-                <CreditCard className="w-5 h-5 text-brand-600" />
-                <span>Fixora Secure Checkout</span>
-              </h3>
-              <button
-                onClick={() => setPaymentModalBooking(null)}
-                className="text-slate-400 hover:text-slate-600"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="bg-slate-50 p-4 rounded-2xl space-y-1">
-              <span className="text-[11px] font-semibold text-slate-400 block">
-                Order #{paymentModalBooking.bookingNumber}
-              </span>
-              <p className="text-sm font-bold text-slate-900">{paymentModalBooking.service?.name}</p>
-              <div className="flex items-baseline justify-between pt-2">
-                <span className="text-xs text-slate-500 font-medium">Total Payable</span>
-                <span className="text-2xl font-black text-brand-600">
-                  ₹{paymentModalBooking.totalPrice.toLocaleString('en-IN')}
-                </span>
-              </div>
-            </div>
-
-            {/* Payment Method Selector */}
-            <div className="space-y-2">
-              <label className="block text-xs font-bold text-slate-700">Select Payment Method</label>
-              <div className="grid grid-cols-2 gap-2 text-xs font-semibold">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('CARD')}
-                  className={`p-3 rounded-xl border flex items-center space-x-2 transition-all ${
-                    paymentMethod === 'CARD'
-                      ? 'border-brand-600 bg-brand-50 text-brand-700'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  <CreditCard className="w-4 h-4" />
-                  <span>Debit / Credit Card</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('UPI')}
-                  className={`p-3 rounded-xl border flex items-center space-x-2 transition-all ${
-                    paymentMethod === 'UPI'
-                      ? 'border-brand-600 bg-brand-50 text-brand-700'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  <QrCode className="w-4 h-4" />
-                  <span>Instant UPI / QR</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('NETBANKING')}
-                  className={`p-3 rounded-xl border flex items-center space-x-2 transition-all ${
-                    paymentMethod === 'NETBANKING'
-                      ? 'border-brand-600 bg-brand-50 text-brand-700'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  <DollarSign className="w-4 h-4" />
-                  <span>Netbanking</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('CASH')}
-                  className={`p-3 rounded-xl border flex items-center space-x-2 transition-all ${
-                    paymentMethod === 'CASH'
-                      ? 'border-brand-600 bg-brand-50 text-brand-700'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Cash on Service</span>
-                </button>
-              </div>
-            </div>
-
-            {paymentMethod === 'CARD' && (
-              <div className="space-y-3 text-xs">
-                <input
-                  type="text"
-                  readOnly
-                  value="•••• •••• •••• 4242"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 font-mono"
-                />
-                <div className="grid grid-cols-2 gap-2">
-                  <input
-                    type="text"
-                    readOnly
-                    value="12/28"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 font-mono"
-                  />
-                  <input
-                    type="text"
-                    readOnly
-                    value="CVC: 888"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 font-mono"
-                  />
-                </div>
-              </div>
-            )}
-
-            <button
-              onClick={handleProcessPayment}
-              disabled={processingPayment}
-              className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-lg transition-all text-sm disabled:opacity-50"
-            >
-              {processingPayment
-                ? 'Authorizing Mock Transaction...'
-                : `Authorize & Pay ₹${paymentModalBooking.totalPrice.toLocaleString('en-IN')}`}
-            </button>
-          </div>
-        </div>
+        <RazorpayCheckoutModal
+          isOpen={Boolean(paymentModalBooking)}
+          onClose={() => setPaymentModalBooking(null)}
+          onSuccess={(result) => {
+            setToastMessage(`Payment of ₹${paymentModalBooking.totalPrice.toLocaleString('en-IN')} authorized & completed via Razorpay (Ref: ${result.paymentId})!`);
+            setPaymentModalBooking(null);
+            fetchBookings();
+          }}
+          amount={paymentModalBooking.totalPrice}
+          bookingId={paymentModalBooking.id}
+          bookingNumber={paymentModalBooking.bookingNumber}
+          serviceName={paymentModalBooking.service?.name || 'Home Appliance Service'}
+          description={`Payment for Booking #${paymentModalBooking.bookingNumber}`}
+        />
       )}
 
       {/* ==================================================== */}

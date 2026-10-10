@@ -1,0 +1,1003 @@
+{
+  "users": [
+    {
+      "id": "user-cust-1",
+      "name": "Sophia Miller",
+      "email": "customer@fixora.com",
+      "role": "CUSTOMER",
+      "phone": "+91 98765 43210",
+      "city": "Bengaluru",
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
+      "isActive": true
+    },
+    {
+      "id": "user-prov-1",
+      "name": "Ar. Ananya Deshmukh",
+      "email": "ananya.design@fixora.com",
+      "role": "PROVIDER",
+      "phone": "+91 98451 22345",
+      "city": "Bengaluru",
+      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+      "isActive": true
+    },
+    {
+      "id": "user-prov-2",
+      "name": "Ar. Vikramaditya Rao",
+      "email": "vikram.design@fixora.com",
+      "role": "PROVIDER",
+      "phone": "+91 98200 44567",
+      "city": "Mumbai",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+      "isActive": true
+    },
+    {
+      "id": "user-prov-3",
+      "name": "Ar. Priya Nambiar",
+      "email": "priya.nambiar@fixora.com",
+      "role": "PROVIDER",
+      "phone": "+91 99890 88712",
+      "city": "Hyderabad",
+      "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150",
+      "isActive": true
+    },
+    {
+      "id": "user-prov-4",
+      "name": "Ar. Siddharth Mehra",
+      "email": "siddharth.mehra@fixora.com",
+      "role": "PROVIDER",
+      "phone": "+91 98110 99823",
+      "city": "Delhi-NCR",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150",
+      "isActive": true
+    },
+    {
+      "id": "user-prov-tech",
+      "name": "Alex Vance (Technician)",
+      "email": "provider@fixora.com",
+      "role": "PROVIDER",
+      "phone": "+91 98450 11223",
+      "city": "Bengaluru",
+      "avatar": "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150",
+      "isActive": true
+    },
+    {
+      "id": "user-prov-cater",
+      "name": "Chef Ranveer Brar (Executive Caterer)",
+      "email": "ranveer.cater@fixora.com",
+      "role": "PROVIDER",
+      "phone": "+91 98451 99001",
+      "city": "Bengaluru",
+      "avatar": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=150",
+      "isActive": true
+    },
+    {
+      "id": "user-admin-1",
+      "name": "Fixora System Admin",
+      "email": "admin@fixora.com",
+      "role": "ADMIN",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150",
+      "isActive": true
+    }
+  ],
+  "providers": [
+    {
+      "id": "des-1",
+      "userId": "user-prov-1",
+      "profession": "designer",
+      "bio": "Council of Architecture Certified Architect (CA/2021/84729). Founder at Studio Vayu Interiors.",
+      "experienceYears": 11,
+      "hourlyRate": 1850,
+      "rating": 4.95,
+      "reviewCount": 42,
+      "isVerified": true,
+      "isAvailable": true,
+      "city": "Bengaluru",
+      "user": {
+        "id": "user-prov-1",
+        "name": "Ar. Ananya Deshmukh",
+        "email": "ananya.design@fixora.com",
+        "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+        "phone": "+91 98451 22345",
+        "role": "PROVIDER",
+        "city": "Bengaluru"
+      }
+    },
+    {
+      "id": "des-2",
+      "userId": "user-prov-2",
+      "profession": "designer",
+      "bio": "AD50 Architect. Lead Architect at Sanskriti Living & Architecture.",
+      "experienceYears": 14,
+      "hourlyRate": 2200,
+      "rating": 4.9,
+      "reviewCount": 38,
+      "isVerified": true,
+      "isAvailable": true,
+      "city": "Mumbai",
+      "user": {
+        "id": "user-prov-2",
+        "name": "Ar. Vikramaditya Rao",
+        "email": "vikram.design@fixora.com",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+        "phone": "+91 98200 44567",
+        "role": "PROVIDER",
+        "city": "Mumbai"
+      }
+    },
+    {
+      "id": "des-3",
+      "userId": "user-prov-3",
+      "profession": "designer",
+      "bio": "Ergonomic Interior Architect at ErgoWork & Loft Spaces.",
+      "experienceYears": 9,
+      "hourlyRate": 1750,
+      "rating": 4.92,
+      "reviewCount": 29,
+      "isVerified": true,
+      "isAvailable": true,
+      "city": "Hyderabad",
+      "user": {
+        "id": "user-prov-3",
+        "name": "Ar. Priya Nambiar",
+        "email": "priya.nambiar@fixora.com",
+        "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150",
+        "phone": "+91 99890 88712",
+        "role": "PROVIDER",
+        "city": "Hyderabad"
+      }
+    },
+    {
+      "id": "des-4",
+      "userId": "user-prov-4",
+      "profession": "designer",
+      "bio": "Turnkey Renovation Master at Atelier Contemporary Living.",
+      "experienceYears": 12,
+      "hourlyRate": 2400,
+      "rating": 4.88,
+      "reviewCount": 35,
+      "isVerified": true,
+      "isAvailable": true,
+      "city": "Delhi-NCR",
+      "user": {
+        "id": "user-prov-4",
+        "name": "Ar. Siddharth Mehra",
+        "email": "siddharth.mehra@fixora.com",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150",
+        "phone": "+91 98110 99823",
+        "role": "PROVIDER",
+        "city": "Delhi-NCR"
+      }
+    },
+    {
+      "id": "prov-tech-1",
+      "userId": "user-prov-tech",
+      "profession": "technician",
+      "bio": "Master Certified HVAC & Home Appliance Specialist. 100% genuine parts.",
+      "experienceYears": 8,
+      "hourlyRate": 450,
+      "rating": 4.9,
+      "reviewCount": 124,
+      "isVerified": true,
+      "isAvailable": true,
+      "city": "Bengaluru",
+      "user": {
+        "id": "user-prov-tech",
+        "name": "Alex Vance (Technician)",
+        "email": "provider@fixora.com",
+        "avatar": "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=150",
+        "phone": "+91 98450 11223",
+        "role": "PROVIDER",
+        "city": "Bengaluru"
+      }
+    },
+    {
+      "id": "cater-1",
+      "userId": "user-prov-cater",
+      "profession": "caterer",
+      "bio": "FSSAI Licensed Executive Caterer (11223344556677). Saffron Feasts Gourmet Catering. Specialized in Royal Awadhi, Live BBQ & Nitrogen Desserts.",
+      "experienceYears": 16,
+      "hourlyRate": 650,
+      "rating": 4.96,
+      "reviewCount": 58,
+      "isVerified": true,
+      "isAvailable": true,
+      "city": "Bengaluru",
+      "user": {
+        "id": "user-prov-cater",
+        "name": "Chef Ranveer Brar (Saffron Feasts)",
+        "email": "ranveer.cater@fixora.com",
+        "avatar": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=150",
+        "phone": "+91 98451 99001",
+        "role": "PROVIDER",
+        "city": "Bengaluru"
+      }
+    }
+  ],
+  "bookings": [
+    {
+      "id": "book-1791644124389",
+      "bookingNumber": "FIX-254363",
+      "customerId": "user-cust-1",
+      "providerId": "des-1",
+      "serviceId": "serv-4",
+      "scheduledAt": "2026-10-11T04:30:00.000Z",
+      "address": "742 Evergreen Terrace, Apt 4B",
+      "city": "Bengaluru",
+      "notes": "Paid via Razorpay Ref: pay_rzp_z7cwro4nfzm",
+      "totalPrice": 1348,
+      "status": "PENDING",
+      "paymentStatus": "PENDING",
+      "createdAt": "2026-10-10T14:55:24.389Z",
+      "service": {
+        "id": "serv-4",
+        "name": "Interior Design Consultation",
+        "basePrice": 1348,
+        "image": "/interiors/simple_minimalist.jpg"
+      },
+      "provider": {
+        "id": "des-1",
+        "user": {
+          "id": "user-prov-1",
+          "name": "Ar. Ananya Deshmukh",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+          "phone": "+91 98451 22345"
+        }
+      }
+    },
+    {
+      "id": "bk-team-sg-1791644056730-4",
+      "bookingNumber": "FIX-859154",
+      "teamBookingId": "team-sg-1791644056730",
+      "customerId": "user-cust-1",
+      "providerId": "prov-sg-10",
+      "serviceId": "serv-cleaner",
+      "scheduledAt": "2026-10-17",
+      "address": "Indiranagar, Bengaluru",
+      "city": "Bengaluru",
+      "notes": "Coordinated Role: CLEANER for Grand Wedding & Royal Reception",
+      "totalPrice": 2500,
+      "status": "CONFIRMED",
+      "paymentStatus": "PAID",
+      "createdAt": "2026-10-10T14:54:16.730Z",
+      "service": {
+        "id": "serv-cleaner",
+        "name": "Hospital-Grade Deep Cleaning & Post-Event Fleet (SkillGraph Coordinated)",
+        "basePrice": 2500
+      },
+      "provider": {
+        "id": "prov-sg-10",
+        "name": "Pooja Verma & Crew",
+        "role": "CLEANER",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200",
+        "phone": "+91 98450 11223"
+      }
+    },
+    {
+      "id": "bk-team-sg-1791644056730-3",
+      "bookingNumber": "FIX-567698",
+      "teamBookingId": "team-sg-1791644056730",
+      "customerId": "user-cust-1",
+      "providerId": "prov-sg-4",
+      "serviceId": "serv-caterer",
+      "scheduledAt": "2026-10-17",
+      "address": "Indiranagar, Bengaluru",
+      "city": "Bengaluru",
+      "notes": "Coordinated Role: CATERER for Grand Wedding & Royal Reception",
+      "totalPrice": 8500,
+      "status": "CONFIRMED",
+      "paymentStatus": "PAID",
+      "createdAt": "2026-10-10T14:54:16.730Z",
+      "service": {
+        "id": "serv-caterer",
+        "name": "Executive Gourmet Caterer & Culinary Director (SkillGraph Coordinated)",
+        "basePrice": 8500
+      },
+      "provider": {
+        "id": "prov-sg-4",
+        "name": "Chef Ranveer Brar",
+        "role": "CATERER",
+        "avatar": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200",
+        "phone": "+91 98450 11223"
+      }
+    },
+    {
+      "id": "bk-team-sg-1791644056730-2",
+      "bookingNumber": "FIX-777547",
+      "teamBookingId": "team-sg-1791644056730",
+      "customerId": "user-cust-1",
+      "providerId": "prov-sg-3",
+      "serviceId": "serv-decorator",
+      "scheduledAt": "2026-10-17",
+      "address": "Indiranagar, Bengaluru",
+      "city": "Bengaluru",
+      "notes": "Coordinated Role: DECORATOR for Grand Wedding & Royal Reception",
+      "totalPrice": 6200,
+      "status": "CONFIRMED",
+      "paymentStatus": "PAID",
+      "createdAt": "2026-10-10T14:54:16.730Z",
+      "service": {
+        "id": "serv-decorator",
+        "name": "Master Floral & Architectural Lighting Designer (SkillGraph Coordinated)",
+        "basePrice": 6200
+      },
+      "provider": {
+        "id": "prov-sg-3",
+        "name": "Zara Fernandes",
+        "role": "DECORATOR",
+        "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200",
+        "phone": "+91 98450 11223"
+      }
+    },
+    {
+      "id": "bk-team-sg-1791644056730-1",
+      "bookingNumber": "FIX-735593",
+      "teamBookingId": "team-sg-1791644056730",
+      "customerId": "user-cust-1",
+      "providerId": "prov-sg-2",
+      "serviceId": "serv-electrician",
+      "scheduledAt": "2026-10-17",
+      "address": "Indiranagar, Bengaluru",
+      "city": "Bengaluru",
+      "notes": "Coordinated Role: ELECTRICIAN for Grand Wedding & Royal Reception",
+      "totalPrice": 3500,
+      "status": "CONFIRMED",
+      "paymentStatus": "PAID",
+      "createdAt": "2026-10-10T14:54:16.730Z",
+      "service": {
+        "id": "serv-electrician",
+        "name": "Certified Stage & Heavy Load Power Engineer (SkillGraph Coordinated)",
+        "basePrice": 3500
+      },
+      "provider": {
+        "id": "prov-sg-2",
+        "name": "Kabir Sharma",
+        "role": "ELECTRICIAN",
+        "avatar": "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=200",
+        "phone": "+91 98450 11223"
+      }
+    },
+    {
+      "id": "bk-team-sg-1791644056730-0",
+      "bookingNumber": "FIX-637731",
+      "teamBookingId": "team-sg-1791644056730",
+      "customerId": "user-cust-1",
+      "providerId": "prov-sg-1",
+      "serviceId": "serv-planner",
+      "scheduledAt": "2026-10-17",
+      "address": "Indiranagar, Bengaluru",
+      "city": "Bengaluru",
+      "notes": "Coordinated Role: PLANNER for Grand Wedding & Royal Reception",
+      "totalPrice": 7500,
+      "status": "CONFIRMED",
+      "paymentStatus": "PAID",
+      "createdAt": "2026-10-10T14:54:16.730Z",
+      "service": {
+        "id": "serv-planner",
+        "name": "Lead Event Architect & Show Director (SkillGraph Coordinated)",
+        "basePrice": 7500
+      },
+      "provider": {
+        "id": "prov-sg-1",
+        "name": "Meera Kapoor",
+        "role": "PLANNER",
+        "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200",
+        "phone": "+91 98450 11223"
+      }
+    },
+    {
+      "id": "book-1791619814266",
+      "bookingNumber": "FIX-831125",
+      "customerId": "user-cust-1",
+      "providerId": "des-1",
+      "serviceId": "serv-1",
+      "scheduledAt": "2026-10-11T03:30:00.000Z",
+      "address": "742 Evergreen Terrace, Apt 4B",
+      "city": "New York",
+      "notes": "Interior Design Consultation",
+      "totalPrice": 0,
+      "status": "PENDING",
+      "paymentStatus": "PENDING",
+      "createdAt": "2026-10-10T08:10:14.266Z",
+      "service": {
+        "id": "serv-1",
+        "name": "Interior Design Consultation",
+        "basePrice": 0,
+        "image": "/interiors/simple_minimalist.jpg"
+      },
+      "provider": {
+        "id": "des-1",
+        "user": {
+          "id": "user-prov-1",
+          "name": "Ar. Ananya Deshmukh",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+          "phone": "+91 98451 22345"
+        }
+      }
+    },
+    {
+      "id": "book-1791357819943",
+      "bookingNumber": "FIX-153413",
+      "customerId": "user-cust-1",
+      "providerId": "des-1",
+      "serviceId": "serv-1",
+      "scheduledAt": "2026-10-08T04:30:00.000Z",
+      "address": "742 Evergreen Terrace, Apt 4B",
+      "city": "New York",
+      "notes": "Interior Design Consultation",
+      "totalPrice": 0,
+      "status": "PENDING",
+      "paymentStatus": "PENDING",
+      "createdAt": "2026-10-07T07:23:39.943Z",
+      "service": {
+        "id": "serv-1",
+        "name": "Interior Design Consultation",
+        "basePrice": 0,
+        "image": "/interiors/simple_minimalist.jpg"
+      },
+      "provider": {
+        "id": "des-1",
+        "user": {
+          "id": "user-prov-1",
+          "name": "Ar. Ananya Deshmukh",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+          "phone": "+91 98451 22345"
+        }
+      }
+    },
+    {
+      "id": "book-1790752368600",
+      "bookingNumber": "FIX-103228",
+      "customerId": "user-cust-1",
+      "providerId": "des-1",
+      "serviceId": "serv-4",
+      "scheduledAt": "2026-10-01T04:30:00.000Z",
+      "address": "742 Evergreen Terrace, Apt 4B",
+      "city": "New York",
+      "notes": "Interior Design Consultation",
+      "totalPrice": 0,
+      "status": "CONFIRMED",
+      "paymentStatus": "PENDING",
+      "createdAt": "2026-09-30T07:12:48.600Z",
+      "service": {
+        "id": "serv-4",
+        "name": "Interior Design Consultation",
+        "basePrice": 0,
+        "image": "/interiors/simple_minimalist.jpg"
+      },
+      "provider": {
+        "id": "des-1",
+        "user": {
+          "id": "user-prov-1",
+          "name": "Ar. Ananya Deshmukh",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+          "phone": "+91 98451 22345"
+        }
+      }
+    },
+    {
+      "id": "book-1790749131462",
+      "bookingNumber": "FIX-610247",
+      "customerId": "user-cust-1",
+      "providerId": "des-1",
+      "serviceId": "serv-1",
+      "scheduledAt": "2026-10-01T04:30:00.000Z",
+      "address": "742 Evergreen Terrace, Apt 4B",
+      "city": "New York",
+      "notes": "Interior Design Consultation",
+      "totalPrice": 0,
+      "status": "PENDING",
+      "paymentStatus": "PENDING",
+      "createdAt": "2026-09-30T06:18:51.462Z",
+      "service": {
+        "id": "serv-1",
+        "name": "Interior Design Consultation",
+        "basePrice": 0,
+        "image": "/interiors/simple_minimalist.jpg"
+      },
+      "provider": {
+        "id": "des-1",
+        "user": {
+          "id": "user-prov-1",
+          "name": "Ar. Ananya Deshmukh",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+          "phone": "+91 98451 22345"
+        }
+      }
+    },
+    {
+      "id": "book-1790748421593",
+      "bookingNumber": "FIX-465802",
+      "customerId": "user-cust-1",
+      "providerId": "des-1",
+      "serviceId": "serv-interior-consult",
+      "scheduledAt": "2006-02-20T00:00:00.000Z",
+      "address": "1150 sq.ft (2BHK), Bengaluru",
+      "city": "Bengaluru",
+      "notes": "Theme: Simple & Minimalist | Budget: PREMIUM | Scope: Full Turnkey | Client: esha  (254151854)",
+      "totalPrice": 0,
+      "status": "PENDING",
+      "paymentStatus": "PENDING",
+      "createdAt": "2026-09-30T06:07:01.593Z",
+      "service": {
+        "id": "serv-interior-consult",
+        "name": "Interior Design Consultation (Simple & Minimalist)",
+        "basePrice": 0,
+        "image": "/interiors/simple_minimalist.jpg"
+      },
+      "provider": {
+        "id": "des-1",
+        "user": {
+          "id": "user-prov-1",
+          "name": "Ar. Ananya Deshmukh",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+          "phone": "+91 98451 22345"
+        }
+      }
+    },
+    {
+      "id": "book-1790747948778",
+      "bookingNumber": "FIX-260600",
+      "customerId": "user-cust-1",
+      "providerId": "des-1",
+      "serviceId": "serv-1",
+      "scheduledAt": "2026-10-01T04:30:00.000Z",
+      "address": "742 Evergreen Terrace, Apt 4B",
+      "city": "New York",
+      "notes": "Interior Design Consultation",
+      "totalPrice": 0,
+      "status": "PENDING",
+      "paymentStatus": "PENDING",
+      "createdAt": "2026-09-30T05:59:08.778Z",
+      "service": {
+        "id": "serv-1",
+        "name": "Interior Design Consultation",
+        "basePrice": 0,
+        "image": "/interiors/simple_minimalist.jpg"
+      },
+      "provider": {
+        "id": "des-1",
+        "user": {
+          "id": "user-prov-1",
+          "name": "Ar. Ananya Deshmukh",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+          "phone": "+91 98451 22345"
+        }
+      }
+    },
+    {
+      "id": "book-1790745772768",
+      "bookingNumber": "FIX-299332",
+      "customerId": "user-cust-1",
+      "providerId": "des-1",
+      "serviceId": "serv-caterer-tasting",
+      "scheduledAt": "2026-10-15T00:00:00.000Z",
+      "address": "50 Guests, Dinner Buffet in Mumbai",
+      "city": "Mumbai",
+      "notes": "Gourmet Catering Tasting Session | Annam Heritage Pure Veg Caterers | 50 Pax • Dinner Buffet | WhatsApp: 5845524524562",
+      "totalPrice": 1040,
+      "status": "PENDING",
+      "paymentStatus": "PENDING",
+      "createdAt": "2026-09-30T05:22:52.768Z",
+      "service": {
+        "id": "serv-caterer-tasting",
+        "name": "Menu Tasting & Feast Session (Annam Heritage Pure Veg Caterers)",
+        "basePrice": 520,
+        "image": "https://images.unsplash.com/photo-1613292443284-c775089f2cf0?w=800"
+      },
+      "provider": {
+        "id": "des-1",
+        "user": {
+          "id": "user-prov-1",
+          "name": "Ar. Ananya Deshmukh",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+          "phone": "+91 98451 22345"
+        }
+      }
+    },
+    {
+      "id": "book-init-1",
+      "bookingNumber": "FIX-839201",
+      "customerId": "user-cust-1",
+      "providerId": "des-1",
+      "serviceId": "serv-interior-consult",
+      "scheduledAt": "2026-10-02T05:09:56.562Z",
+      "address": "1,450 sq.ft (3BHK), Indiranagar, Bengaluru",
+      "city": "Bengaluru",
+      "notes": "Initial Consultation for Simple & Minimalist Design. Looking for Scandinavian light oak finish.",
+      "totalPrice": 0,
+      "status": "CONFIRMED",
+      "paymentStatus": "PAID",
+      "createdAt": "2026-09-29T05:09:56.563Z",
+      "service": {
+        "id": "serv-interior-consult",
+        "name": "Interior Design Consultation (Simple & Minimalist)",
+        "basePrice": 0,
+        "image": "/interiors/simple_minimalist.jpg"
+      },
+      "provider": {
+        "id": "des-1",
+        "user": {
+          "id": "user-prov-1",
+          "name": "Ar. Ananya Deshmukh",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
+          "phone": "+91 98451 22345"
+        }
+      }
+    },
+    {
+      "id": "book-init-2",
+      "bookingNumber": "FIX-512934",
+      "customerId": "user-cust-1",
+      "providerId": "cater-1",
+      "serviceId": "serv-caterer-tasting",
+      "scheduledAt": "2026-10-03T05:09:56.563Z",
+      "address": "150 Guests, Royal Awadhi Dinner Buffet in Indiranagar, Bengaluru",
+      "city": "Bengaluru",
+      "notes": "Gourmet Catering Tasting Session | Saffron Feasts | 150 Pax • Dinner Buffet",
+      "totalPrice": 1300,
+      "status": "PENDING",
+      "paymentStatus": "PAID",
+      "createdAt": "2026-09-30T05:09:56.563Z",
+      "service": {
+        "id": "serv-caterer-tasting",
+        "name": "Menu Tasting & Feast Session (Saffron Feasts)",
+        "basePrice": 650,
+        "image": "https://images.unsplash.com/photo-1555244162-803834f70033?w=800"
+      },
+      "provider": {
+        "id": "cater-1",
+        "user": {
+          "id": "user-prov-cater",
+          "name": "Chef Ranveer Brar (Saffron Feasts)",
+          "avatar": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=150",
+          "phone": "+91 98451 99001"
+        }
+      }
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif-1791644124389",
+      "userId": "user-prov-1",
+      "providerId": "des-1",
+      "title": "New Consultation Booking Received!",
+      "message": "Sophia Miller scheduled a free site consultation for Interior Design Consultation (742 Evergreen Terrace, Apt 4B) on 11/10/2026. WhatsApp: +91 98765 43210",
+      "type": "BOOKING",
+      "referenceId": "book-1791644124389",
+      "link": "/provider/dashboard",
+      "isRead": false,
+      "createdAt": "2026-10-10T14:55:24.417Z"
+    },
+    {
+      "id": "notif-1791644121791",
+      "userId": "user-cust-1",
+      "title": "Razorpay Payment Confirmed",
+      "message": "Payment of ₹1348 (Ref: pay_rzp_z7cwro4nfzm) received via Razorpay. Receipt generated.",
+      "type": "PAYMENT",
+      "referenceId": "pay-1791644121791",
+      "link": "/my-bookings",
+      "isRead": false,
+      "createdAt": "2026-10-10T14:55:21.791Z"
+    },
+    {
+      "id": "notif-1791644080449",
+      "userId": "user-cust-1",
+      "title": "Razorpay Payment Confirmed",
+      "message": "Payment of ₹2397 (Ref: pay_rzp_smebse3mk3d) received via Razorpay. Receipt generated.",
+      "type": "PAYMENT",
+      "referenceId": "pay-1791644080449",
+      "link": "/my-bookings",
+      "isRead": false,
+      "createdAt": "2026-10-10T14:54:40.449Z"
+    },
+    {
+      "id": "notif-1791644053391",
+      "userId": "user-cust-1",
+      "title": "Razorpay Payment Confirmed",
+      "message": "Payment of ₹2397 (Ref: pay_rzp_gs63rqelz7t) received via Razorpay. Receipt generated.",
+      "type": "PAYMENT",
+      "referenceId": "pay-1791644053391",
+      "link": "/my-bookings",
+      "isRead": false,
+      "createdAt": "2026-10-10T14:54:13.391Z"
+    },
+    {
+      "id": "notif-1791641891743",
+      "userId": "user-cust-1",
+      "title": "Razorpay Payment Confirmed",
+      "message": "Payment of ₹499 (Ref: pay_rzp_test123) received via Razorpay. Receipt generated.",
+      "type": "PAYMENT",
+      "referenceId": "pay-1791641891743",
+      "link": "/my-bookings",
+      "isRead": false,
+      "createdAt": "2026-10-10T14:18:11.743Z"
+    },
+    {
+      "id": "notif-1791619814266",
+      "userId": "user-prov-1",
+      "providerId": "des-1",
+      "title": "New Consultation Booking Received!",
+      "message": "Sophia Miller scheduled a free site consultation for Interior Design Consultation (742 Evergreen Terrace, Apt 4B) on 11/10/2026. WhatsApp: +91 98765 43210",
+      "type": "BOOKING",
+      "referenceId": "book-1791619814266",
+      "link": "/provider/dashboard",
+      "isRead": false,
+      "createdAt": "2026-10-10T08:10:14.286Z"
+    },
+    {
+      "id": "notif-1791357819943",
+      "userId": "user-prov-1",
+      "providerId": "des-1",
+      "title": "New Consultation Booking Received!",
+      "message": "Sophia Miller scheduled a free site consultation for Interior Design Consultation (742 Evergreen Terrace, Apt 4B) on 8/10/2026. WhatsApp: +91 98765 43210",
+      "type": "BOOKING",
+      "referenceId": "book-1791357819943",
+      "link": "/provider/dashboard",
+      "isRead": false,
+      "createdAt": "2026-10-07T07:23:39.963Z"
+    },
+    {
+      "id": "notif-1790783589831",
+      "userId": "user-cust-1",
+      "title": "Booking #FIX-103228 Updated",
+      "message": "Your booking status has been updated to CONFIRMED.",
+      "type": "BOOKING",
+      "referenceId": "book-1790752368600",
+      "link": "/my-bookings",
+      "isRead": false,
+      "createdAt": "2026-09-30T15:53:09.831Z"
+    },
+    {
+      "id": "notif-1790752368600",
+      "userId": "user-prov-1",
+      "providerId": "des-1",
+      "title": "New Consultation Booking Received!",
+      "message": "Sophia Miller scheduled a free site consultation for Interior Design Consultation (742 Evergreen Terrace, Apt 4B) on 1/10/2026. WhatsApp: +91 98765 43210",
+      "type": "BOOKING",
+      "referenceId": "book-1790752368600",
+      "link": "/provider/dashboard",
+      "isRead": false,
+      "createdAt": "2026-09-30T07:12:48.600Z"
+    },
+    {
+      "id": "notif-1790749131462",
+      "userId": "user-prov-1",
+      "providerId": "des-1",
+      "title": "New Consultation Booking Received!",
+      "message": "Sophia Miller scheduled a free site consultation for Interior Design Consultation (742 Evergreen Terrace, Apt 4B) on 1/10/2026. WhatsApp: +91 98765 43210",
+      "type": "BOOKING",
+      "referenceId": "book-1790749131462",
+      "link": "/provider/dashboard",
+      "isRead": false,
+      "createdAt": "2026-09-30T06:18:51.463Z"
+    },
+    {
+      "id": "notif-1790748421593",
+      "userId": "user-prov-1",
+      "providerId": "des-1",
+      "title": "New Consultation Booking Received!",
+      "message": "esha  scheduled a free site consultation for Interior Design Consultation (Simple & Minimalist) (1150 sq.ft (2BHK), Bengaluru) on 20/2/2006. WhatsApp: 254151854",
+      "type": "BOOKING",
+      "referenceId": "book-1790748421593",
+      "link": "/provider/dashboard",
+      "isRead": false,
+      "createdAt": "2026-09-30T06:07:01.593Z"
+    },
+    {
+      "id": "notif-1790747948778",
+      "userId": "user-prov-1",
+      "providerId": "des-1",
+      "title": "New Consultation Booking Received!",
+      "message": "Sophia Miller scheduled a free site consultation for Interior Design Consultation (742 Evergreen Terrace, Apt 4B) on 1/10/2026. WhatsApp: +91 98765 43210",
+      "type": "BOOKING",
+      "referenceId": "book-1790747948778",
+      "link": "/provider/dashboard",
+      "isRead": false,
+      "createdAt": "2026-09-30T05:59:08.778Z"
+    },
+    {
+      "id": "notif-1790745772768",
+      "userId": "user-prov-1",
+      "providerId": "des-1",
+      "title": "New Consultation Booking Received!",
+      "message": "esha  scheduled a free site consultation for Menu Tasting & Feast Session (Annam Heritage Pure Veg Caterers) (50 Guests, Dinner Buffet in Mumbai) on 15/10/2026. WhatsApp: 5845524524562",
+      "type": "BOOKING",
+      "referenceId": "book-1790745772768",
+      "link": "/provider/dashboard",
+      "isRead": false,
+      "createdAt": "2026-09-30T05:22:52.850Z"
+    },
+    {
+      "id": "notif-init-1",
+      "userId": "user-prov-1",
+      "providerId": "des-1",
+      "title": "Consultation Confirmed",
+      "message": "Sophia Miller booked an Interior Design Consultation for Simple & Minimalist (1,450 sq.ft).",
+      "type": "BOOKING",
+      "referenceId": "book-init-1",
+      "link": "/provider/dashboard",
+      "isRead": false,
+      "createdAt": "2026-09-30T04:09:56.563Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "pay-1791644121791",
+      "bookingId": "standalone",
+      "customerId": "user-cust-1",
+      "amount": 1348,
+      "currency": "INR",
+      "method": "RAZORPAY",
+      "status": "PAID",
+      "transactionId": "pay_rzp_z7cwro4nfzm",
+      "razorpayOrderId": "order_rzp_rsm9s66nc4n",
+      "description": "Front-Load Washing Machine Drum & Bearing Overhaul Appointment",
+      "mockReceiptUrl": "https://fixora.local/receipts/pay_rzp_z7cwro4nfzm.pdf",
+      "paidAt": "2026-10-10T14:55:21.791Z",
+      "createdAt": "2026-10-10T14:55:21.791Z"
+    },
+    {
+      "id": "pay-1791644080449",
+      "bookingId": "sg-team-1791644076882",
+      "customerId": "user-cust-1",
+      "amount": 2397,
+      "currency": "INR",
+      "method": "RAZORPAY",
+      "status": "PAID",
+      "transactionId": "pay_rzp_smebse3mk3d",
+      "razorpayOrderId": "order_rzp_hr0m3rkmhcs",
+      "description": "Retainer advance deposit for 5 coordinated specialists",
+      "mockReceiptUrl": "https://fixora.local/receipts/pay_rzp_smebse3mk3d.pdf",
+      "paidAt": "2026-10-10T14:54:40.449Z",
+      "createdAt": "2026-10-10T14:54:40.449Z"
+    },
+    {
+      "id": "pay-1791644053391",
+      "bookingId": "sg-team-1791644047562",
+      "customerId": "user-cust-1",
+      "amount": 2397,
+      "currency": "INR",
+      "method": "RAZORPAY",
+      "status": "PAID",
+      "transactionId": "pay_rzp_gs63rqelz7t",
+      "razorpayOrderId": "order_rzp_o74a3siluqa",
+      "description": "Retainer advance deposit for 5 coordinated specialists",
+      "mockReceiptUrl": "https://fixora.local/receipts/pay_rzp_gs63rqelz7t.pdf",
+      "paidAt": "2026-10-10T14:54:13.391Z",
+      "createdAt": "2026-10-10T14:54:13.391Z"
+    },
+    {
+      "id": "pay-1791641891743",
+      "bookingId": "bk_demo_01",
+      "customerId": "user-cust-1",
+      "amount": 499,
+      "currency": "INR",
+      "method": "RAZORPAY",
+      "status": "PAID",
+      "transactionId": "pay_rzp_test123",
+      "razorpayOrderId": "order_rzp_test123",
+      "description": "Fixora Home Service Transaction",
+      "mockReceiptUrl": "https://fixora.local/receipts/pay_rzp_test123.pdf",
+      "paidAt": "2026-10-10T14:18:11.743Z",
+      "createdAt": "2026-10-10T14:18:11.743Z"
+    }
+  ],
+  "teamBookings": [
+    {
+      "id": "team-sg-1791644056730",
+      "bookingNumber": "FIX-TEAM-475390",
+      "customerId": "user-cust-1",
+      "projectName": "Grand Wedding & Royal Reception",
+      "projectType": "WEDDING_CELEBRATION",
+      "status": "CONFIRMED",
+      "paymentStatus": "PAID",
+      "scheduledAt": "2026-10-17",
+      "totalPrice": 23970,
+      "teamSize": 5,
+      "members": [
+        {
+          "id": "prov-sg-1",
+          "name": "Meera Kapoor",
+          "role": "PLANNER",
+          "title": "Lead Event Architect & Show Director",
+          "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200",
+          "rating": 4.98,
+          "reviews": 142,
+          "baseRate": 7500,
+          "reliabilityIndex": 0.99,
+          "experienceYears": 12,
+          "city": "Bengaluru",
+          "skills": [
+            "Timeline Orchestration",
+            "Vendor Sync",
+            "VIP Hospitality",
+            "Budget Control"
+          ],
+          "badge": "Diamond Orchestrator"
+        },
+        {
+          "id": "prov-sg-2",
+          "name": "Kabir Sharma",
+          "role": "ELECTRICIAN",
+          "title": "Certified Stage & Heavy Load Power Engineer",
+          "avatar": "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=200",
+          "rating": 4.92,
+          "reviews": 98,
+          "baseRate": 3500,
+          "reliabilityIndex": 0.97,
+          "experienceYears": 9,
+          "city": "Bengaluru",
+          "skills": [
+            "Generator Sync",
+            "3-Phase Heavy Balancing",
+            "Emergency Backup",
+            "Fire Safety"
+          ],
+          "badge": "Zero-Fault Certified"
+        },
+        {
+          "id": "prov-sg-3",
+          "name": "Zara Fernandes",
+          "role": "DECORATOR",
+          "title": "Master Floral & Architectural Lighting Designer",
+          "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200",
+          "rating": 4.95,
+          "reviews": 115,
+          "baseRate": 6200,
+          "reliabilityIndex": 0.98,
+          "experienceYears": 10,
+          "city": "Bengaluru",
+          "skills": [
+            "Geometric Floral Backdrops",
+            "Ambient DMX Lighting",
+            "Stage Truss Rigging",
+            "Eco Decors"
+          ],
+          "badge": "AD100 Stylist"
+        },
+        {
+          "id": "prov-sg-4",
+          "name": "Chef Ranveer Brar",
+          "role": "CATERER",
+          "title": "Executive Gourmet Caterer & Culinary Director",
+          "avatar": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200",
+          "rating": 4.97,
+          "reviews": 164,
+          "baseRate": 8500,
+          "reliabilityIndex": 0.98,
+          "experienceYears": 16,
+          "city": "Bengaluru",
+          "skills": [
+            "Live Nitrogen Counters",
+            "Royal Awadhi Banquets",
+            "Global Vegan Canapés",
+            "Molecular Bar"
+          ],
+          "badge": "Michelin Recommended"
+        },
+        {
+          "id": "prov-sg-10",
+          "name": "Pooja Verma & Crew",
+          "role": "CLEANER",
+          "title": "Hospital-Grade Deep Cleaning & Post-Event Fleet",
+          "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200",
+          "rating": 4.93,
+          "reviews": 120,
+          "baseRate": 2500,
+          "reliabilityIndex": 0.98,
+          "experienceYears": 7,
+          "city": "Bengaluru",
+          "skills": [
+            "Industrial Scrubbers",
+            "Eco-Enzyme Degreasing",
+            "Glass Squeegee Buffing",
+            "Rapid 60-Min Turnaround"
+          ],
+          "badge": "CleanSafe Certified"
+        }
+      ],
+      "notes": "Booked via CityLink SkillGraph AI Multi-Vendor Coordinator",
+      "createdAt": "2026-10-10T14:54:16.730Z"
+    }
+  ]
+}

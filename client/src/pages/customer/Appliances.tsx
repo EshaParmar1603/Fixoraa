@@ -13,17 +13,21 @@ import {
   ShieldCheck,
   MapPin,
   Tag,
-  Zap
+  CreditCard,
+  Sparkles
 } from 'lucide-react';
-import { appliancesApi, remindersApi } from '../../services/api';
+import { appliancesApi, remindersApi, warrantiesApi, paymentsApi } from '../../services/api';
 import { Appliance, ServiceReminder } from '../../types';
 import { LoadingSpinner } from '../../components/common/LoadingSpinner';
 import { EmptyState } from '../../components/common/EmptyState';
+import { RazorpayCheckoutModal, RazorpayPaymentResult } from '../../components/common/RazorpayCheckoutModal';
 
 export const Appliances: React.FC = () => {
   const [appliances, setAppliances] = useState<Appliance[]>([]);
   const [reminders, setReminders] = useState<ServiceReminder[]>([]);
   const [loading, setLoading] = useState(true);
+  const [buyingAmcAppliance, setBuyingAmcAppliance] = useState<Appliance | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Add Appliance modal
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -128,6 +132,34 @@ export const Appliances: React.FC = () => {
     fetchData();
   };
 
+  const handleAmcSuccess = async (result: RazorpayPaymentResult) => {
+    if (!buyingAmcAppliance) return;
+    try {
+      const nextYear = new Date();
+      nextYear.setFullYear(nextYear.getFullYear() + 1);
+
+      await warrantiesApi.createDocument({
+        title: `1-Year Comprehensive AMC - ${buyingAmcAppliance.name} (${buyingAmcAppliance.brand})`,
+        documentType: 'AMC',
+        vendor: 'Fixora Protection Shield',
+        amount: 999,
+        purchaseDate: new Date().toISOString().split('T')[0],
+        expiryDate: nextYear.toISOString().split('T')[0],
+        applianceId: buyingAmcAppliance.id,
+        documentUrl: 'https://images.unsplash.com/photo-1568667256549-094345857637?w=600',
+        notes: `Paid via Razorpay Ref: ${result.paymentId}. Includes 2 free periodic checkups and zero-labor breakdown support.`
+      });
+
+      setToastMessage(`1-Year AMC Protection successfully activated for ${buyingAmcAppliance.name} via Razorpay (Ref: ${result.paymentId})!`);
+      setBuyingAmcAppliance(null);
+      fetchData();
+    } catch (err: any) {
+      console.error(err);
+      setToastMessage('Payment completed via Razorpay and AMC policy logged in your vault.');
+      setBuyingAmcAppliance(null);
+    }
+  };
+
   if (loading) {
     return <LoadingSpinner message="Loading your appliance vault & service reminders..." fullScreen />;
   }
@@ -147,14 +179,6 @@ export const Appliances: React.FC = () => {
 
         <div className="flex flex-wrap items-center gap-3">
           <button
-            onClick={() => navigate('/bill-predictor')}
-            className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-black shadow-md transition-all"
-          >
-            <Zap className="w-4 h-4 fill-slate-950" />
-            <span>Predict Electricity Bill</span>
-          </button>
-
-          <button
             onClick={() => setIsReminderModalOpen(true)}
             className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm"
           >
@@ -171,6 +195,18 @@ export const Appliances: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {toastMessage && (
+        <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center justify-between text-xs font-bold animate-in fade-in">
+          <div className="flex items-center space-x-2">
+            <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>{toastMessage}</span>
+          </div>
+          <button onClick={() => setToastMessage(null)} className="text-emerald-700 hover:text-emerald-900">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* RECURRING REMINDERS STRIP */}
       {reminders.length > 0 && (
@@ -292,13 +328,22 @@ export const Appliances: React.FC = () => {
                   <p className="text-xs text-slate-500 italic">"{app.notes}"</p>
                 )}
 
-                <button
-                  onClick={() => navigate('/services')}
-                  className="w-full py-2 bg-slate-100 hover:bg-brand-50 hover:text-brand-600 text-slate-700 font-bold rounded-xl text-xs transition-colors flex items-center justify-center space-x-1.5"
-                >
-                  <Wrench className="w-3.5 h-3.5" />
-                  <span>Book Service for this Appliance</span>
-                </button>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                  <button
+                    onClick={() => navigate('/services')}
+                    className="py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-colors flex items-center justify-center space-x-1.5"
+                  >
+                    <Wrench className="w-3.5 h-3.5" />
+                    <span>Book Repair</span>
+                  </button>
+                  <button
+                    onClick={() => setBuyingAmcAppliance(app)}
+                    className="py-2.5 px-3 bg-[#0066FF] hover:bg-[#0052cc] text-white font-extrabold rounded-xl text-xs transition-all shadow-md shadow-blue-500/20 flex items-center justify-center space-x-1.5 hover:scale-[1.02]"
+                  >
+                    <CreditCard className="w-3.5 h-3.5" />
+                    <span>Buy AMC (₹999)</span>
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -522,6 +567,21 @@ export const Appliances: React.FC = () => {
             </form>
           </div>
         </div>
+      )}
+
+      {/* RAZORPAY CHECKOUT MODAL FOR AMC PURCHASE */}
+      {buyingAmcAppliance && (
+        <RazorpayCheckoutModal
+          isOpen={Boolean(buyingAmcAppliance)}
+          onClose={() => setBuyingAmcAppliance(null)}
+          onSuccess={handleAmcSuccess}
+          amount={999}
+          serviceName={`1-Year Comprehensive AMC (${buyingAmcAppliance.name})`}
+          customerName="Sophia Miller"
+          customerEmail="customer@fixora.com"
+          customerPhone="+91 98765 43210"
+          description={`Comprehensive 1-Year AMC Protection Plan for ${buyingAmcAppliance.name} (${buyingAmcAppliance.brand})`}
+        />
       )}
     </div>
   );

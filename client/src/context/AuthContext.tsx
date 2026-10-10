@@ -16,7 +16,7 @@ interface AuthContextType {
   logout: () => void;
   refreshProfile: () => Promise<void>;
   updateProfile: (data: any) => Promise<void>;
-  loginAsDemo: (demoRole: Role) => Promise<void>;
+  loginAsDemo: (demoRole: Role, demoEmailOverride?: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -121,12 +121,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('fixora_user', JSON.stringify(user));
   };
 
-  const loginAsDemo = async (demoRole: Role) => {
-    const demoEmail = demoRole === 'ADMIN'
+  const loginAsDemo = async (demoRole: Role, demoEmailOverride?: string) => {
+    const demoEmail = demoEmailOverride || (demoRole === 'ADMIN'
       ? 'admin@fixora.com'
       : demoRole === 'PROVIDER'
       ? 'provider@fixora.com'
-      : 'customer@fixora.com';
+      : 'customer@fixora.com');
     await login(demoEmail, 'Password123!');
   };
 

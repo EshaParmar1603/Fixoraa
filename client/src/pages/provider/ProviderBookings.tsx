@@ -8,13 +8,15 @@ import {
   MapPin,
   Phone,
   Search,
-  MessageSquare
+  MessageSquare,
+  Navigation
 } from 'lucide-react';
 import { bookingsApi } from '../../services/api';
 import { Booking, BookingStatus } from '../../types';
 import { StatusBadge } from '../../components/common/StatusBadge';
 import { LoadingSpinner } from '../../components/common/LoadingSpinner';
 import { EmptyState } from '../../components/common/EmptyState';
+import { LiveTrackingModal } from '../../components/tracking/LiveTrackingModal';
 import { useNavigate } from 'react-router-dom';
 
 export const ProviderBookings: React.FC = () => {
@@ -22,6 +24,7 @@ export const ProviderBookings: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>('ALL');
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [trackingBooking, setTrackingBooking] = useState<Booking | null>(null);
 
   const navigate = useNavigate();
 
@@ -231,11 +234,32 @@ export const ProviderBookings: React.FC = () => {
                       <span>Job Finished</span>
                     </span>
                   )}
+
+                  {['PENDING', 'CONFIRMED', 'IN_PROGRESS'].includes(b.status) && (
+                    <button
+                      onClick={() => setTrackingBooking(b)}
+                      className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold border border-slate-700 flex items-center space-x-1.5"
+                    >
+                      <Navigation className="w-3.5 h-3.5 text-blue-400" />
+                      <span>Live GPS Radar</span>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
           ))}
         </div>
+      )}
+
+      {/* Live GPS Radar Modal for Provider */}
+      {trackingBooking && (
+        <LiveTrackingModal
+          isOpen={Boolean(trackingBooking)}
+          onClose={() => setTrackingBooking(null)}
+          bookingId={trackingBooking.id}
+          bookingNumber={trackingBooking.bookingNumber}
+          serviceTitle={trackingBooking.service?.name || 'On-Site Job'}
+        />
       )}
     </div>
   );

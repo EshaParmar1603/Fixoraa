@@ -10,7 +10,8 @@ import {
   CheckCircle,
   Play,
   Star,
-  UserCheck
+  UserCheck,
+  Navigation
 } from 'lucide-react';
 import { Booking, BookingStatus } from '../../types';
 import { StatusBadge } from '../common/StatusBadge';
@@ -19,6 +20,7 @@ import { useAuth } from '../../context/AuthContext';
 interface BookingCardProps {
   booking: Booking;
   onPayNow?: (booking: Booking) => void;
+  onTrackTechnician?: (booking: Booking) => void;
   onWriteReview?: (booking: Booking) => void;
   onCancel?: (bookingId: string) => void;
   onStatusUpdate?: (bookingId: string, status: BookingStatus) => void;
@@ -27,6 +29,7 @@ interface BookingCardProps {
 export const BookingCard: React.FC<BookingCardProps> = ({
   booking,
   onPayNow,
+  onTrackTechnician,
   onWriteReview,
   onCancel,
   onStatusUpdate,
@@ -140,10 +143,21 @@ export const BookingCard: React.FC<BookingCardProps> = ({
               {booking.paymentStatus === 'PENDING' && onPayNow && (
                 <button
                   onClick={() => onPayNow(booking)}
-                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-all"
+                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-[#0066FF] hover:bg-[#0052cc] text-white text-xs font-bold shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02]"
                 >
                   <CreditCard className="w-3.5 h-3.5" />
-                  <span>Pay Now</span>
+                  <span>Pay with Razorpay</span>
+                </button>
+              )}
+
+              {['CONFIRMED', 'IN_PROGRESS', 'PENDING'].includes(booking.status) && onTrackTechnician && (
+                <button
+                  onClick={() => onTrackTechnician(booking)}
+                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-md shadow-slate-900/20 transition-all hover:scale-[1.02] border border-slate-700"
+                >
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <Navigation className="w-3.5 h-3.5 text-blue-400" />
+                  <span>Track Live GPS</span>
                 </button>
               )}
 
@@ -199,6 +213,16 @@ export const BookingCard: React.FC<BookingCardProps> = ({
                 >
                   <CheckCircle className="w-3.5 h-3.5" />
                   <span>Mark Completed</span>
+                </button>
+              )}
+
+              {onTrackTechnician && (
+                <button
+                  onClick={() => onTrackTechnician(booking)}
+                  className="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold border border-slate-700"
+                >
+                  <Navigation className="w-3.5 h-3.5 text-blue-400" />
+                  <span>GPS Radar</span>
                 </button>
               )}
             </>

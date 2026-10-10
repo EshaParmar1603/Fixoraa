@@ -14,6 +14,8 @@ import {
 import { servicesApi, providersApi, bookingsApi } from '../../services/api';
 import { Service, ProviderProfile } from '../../types';
 import { LoadingSpinner } from '../../components/common/LoadingSpinner';
+import { RazorpayCheckoutModal, RazorpayPaymentResult } from '../../components/common/RazorpayCheckoutModal';
+import { CreditCard, Banknote } from 'lucide-react';
 
 export const BookService: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
@@ -31,11 +33,15 @@ export const BookService: React.FC = () => {
   });
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('10:00 AM - 12:00 PM');
   const [address, setAddress] = useState('742 Evergreen Terrace, Apt 4B');
-  const [city, setCity] = useState('New York');
+  const [city, setCity] = useState('Bengaluru');
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Payment choice
+  const [paymentChoice, setPaymentChoice] = useState<'RAZORPAY' | 'CASH'>('RAZORPAY');
+  const [isRazorpayModalOpen, setIsRazorpayModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -74,8 +80,13 @@ export const BookService: React.FC = () => {
     e.preventDefault();
     if (!service) return;
     setError(null);
-    setSubmitting(true);
 
+    if (paymentChoice === 'RAZORPAY') {
+      setIsRazorpayModalOpen(true);
+      return;
+    }
+
+    setSubmitting(true);
     try {
       const scheduledDateTime = new Date(`${selectedDate}T${selectedTimeSlot.slice(0, 5)}:00`).toISOString();
 
@@ -86,11 +97,58 @@ export const BookService: React.FC = () => {
         address,
         city,
         notes,
+        totalPrice: (service.basePrice || 499) + 49,
+        paymentStatus: 'PENDING',
+        status: 'PENDING'
       });
 
       navigate('/my-bookings', { state: { bookingSuccess: true } });
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to place booking. Please check details.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleRazorpaySuccess = async (result: RazorpayPaymentResult) => {
+    if (!service) return;
+    setSubmitting(true);
+    try {
+      const scheduledDateTime = new Date(`${selectedDate}T${selectedTimeSlot.slice(0, 5)}:00`).toISOString();
+
+      await bookingsApi.createBooking({
+        serviceId: service.id,
+        providerId: provider?.id || null,
+        scheduledAt: scheduledDateTime,
+        address,
+        city,
+        notes: `${notes ? notes + ' | ' : ''}Paid via Razorpay Ref: ${result.paymentId}`,
+        totalPrice: total,
+        paymentStatus: 'PAID',
+        status: 'CONFIRMED',
+        payment: {
+          id: result.paymentId,
+          bookingId: 'pending',
+          customerId: 'user-cust-1',
+          amount: total,
+          currency: 'INR',
+          method: 'RAZORPAY',
+          status: 'PAID',
+          transactionId: result.paymentId,
+          razorpayOrderId: result.orderId,
+          paidAt: result.timestamp
+        }
+      });
+
+      navigate('/my-bookings', {
+        state: {
+          bookingSuccess: true,
+          razorpayPaymentId: result.paymentId,
+          toast: `Booking confirmed! Payment of ₹${total} received via Razorpay.`
+        }
+      });
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Payment verified, but booking creation encountered an issue.');
     } finally {
       setSubmitting(false);
     }
@@ -258,27 +316,112 @@ export const BookService: React.FC = () => {
               </div>
             </div>
 
+            {/* Payment Choice Selector */}
+            <div className="space-y-2 pt-2 border-t border-slate-100">
+              <label className="block text-xs font-bold text-slate-700">Choose Payment Method</label>
+
+              {/* Razorpay Option */}
+              <button
+                type="button"
+                onClick={() => setPaymentChoice('RAZORPAY')}
+                className={`w-full p-3 rounded-2xl border text-left transition-all flex items-center justify-between ${
+                  paymentChoice === 'RAZORPAY'
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm'
+                    : 'border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center space-x-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-[#0c1b33] flex items-center justify-center text-sky-400">
+                    <CreditCard className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-1.5">
+                      <span className="text-xs font-extrabold text-slate-900">Razorpay Online</span>
+                      <span className="px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 font-black text-[9px]">
+                        UPI • Cards
+                      </span>
+                    </div>
+                    <span className="text-[10px] text-slate-500">Fast, instant, guaranteed</span>
+                  </div>
+                </div>
+                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                  paymentChoice === 'RAZORPAY' ? 'border-blue-600 bg-blue-600' : 'border-slate-300'
+                }`}>
+                  {paymentChoice === 'RAZORPAY' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                </div>
+              </button>
+
+              {/* Cash on Delivery Option */}
+              <button
+                type="button"
+                onClick={() => setPaymentChoice('CASH')}
+                className={`w-full p-3 rounded-2xl border text-left transition-all flex items-center justify-between ${
+                  paymentChoice === 'CASH'
+                    ? 'border-brand-600 bg-brand-50/70 shadow-sm'
+                    : 'border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center space-x-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700">
+                    <Banknote className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-extrabold text-slate-900 block">Cash on Service</span>
+                    <span className="text-[10px] text-slate-500">Pay pro after inspection</span>
+                  </div>
+                </div>
+                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                  paymentChoice === 'CASH' ? 'border-brand-600 bg-brand-600' : 'border-slate-300'
+                }`}>
+                  {paymentChoice === 'CASH' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                </div>
+              </button>
+            </div>
+
             <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-800 text-[11px] space-y-1">
               <div className="flex items-center font-bold">
                 <ShieldCheck className="w-3.5 h-3.5 mr-1" />
                 <span>30-Day Fix Guarantee Included</span>
               </div>
               <p className="text-[10px] text-emerald-700">
-                Pay online now or in cash after work completion.
+                100% refund guarantee if technician does not arrive on schedule.
               </p>
             </div>
 
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-3.5 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl shadow-lg transition-all flex items-center justify-center space-x-2 text-sm disabled:opacity-50"
+              className={`w-full py-3.5 px-4 font-extrabold rounded-2xl shadow-lg transition-all flex items-center justify-center space-x-2 text-sm disabled:opacity-50 ${
+                paymentChoice === 'RAZORPAY'
+                  ? 'bg-[#0066FF] hover:bg-[#0052cc] text-white shadow-blue-500/25'
+                  : 'bg-brand-600 hover:bg-brand-700 text-white shadow-brand-500/25'
+              }`}
             >
-              <span>{submitting ? 'Placing Order...' : 'Confirm Booking'}</span>
+              <span>
+                {submitting
+                  ? 'Processing Order...'
+                  : paymentChoice === 'RAZORPAY'
+                  ? `Pay ₹${total.toLocaleString('en-IN')} with Razorpay`
+                  : 'Confirm Booking (Cash on Service)'}
+              </span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>
       </form>
+
+      {/* RAZORPAY CHECKOUT MODAL */}
+      <RazorpayCheckoutModal
+        isOpen={isRazorpayModalOpen}
+        onClose={() => setIsRazorpayModalOpen(false)}
+        onSuccess={handleRazorpaySuccess}
+        amount={total}
+        serviceName={service.name}
+        customerName="Sophia Miller"
+        customerEmail="customer@fixora.com"
+        customerPhone="+91 98765 43210"
+        description={`${service.name} Appointment`}
+      />
     </div>
   );
 };

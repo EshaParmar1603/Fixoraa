@@ -30,11 +30,11 @@ export const Login: React.FC = () => {
     }
   };
 
-  const handleQuickDemo = async (role: Role) => {
+  const handleQuickDemo = async (role: Role, emailOverride?: string) => {
     setLoading(true);
     setError(null);
     try {
-      await loginAsDemo(role);
+      await loginAsDemo(role, emailOverride);
       if (role === 'ADMIN') navigate('/admin/dashboard');
       else if (role === 'PROVIDER') navigate('/provider/dashboard');
       else navigate(from, { replace: true });
@@ -50,14 +50,14 @@ export const Login: React.FC = () => {
       <div className="max-w-md w-full space-y-8 bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-xl">
         {/* Brand Header */}
         <div className="text-center">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-500 mx-auto flex items-center justify-center text-white shadow-glow mb-4">
-            <Wrench className="w-7 h-7" />
+          <div className="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center mb-4 overflow-hidden shadow-lg border border-slate-100">
+            <img src="/citylink-app-card.png" alt="CityLink" className="w-full h-full object-cover" />
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Welcome to Fixora
+            Welcome to CityLink
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-slate-500">
-            Sign in to manage repairs, warranties, and certified technician bookings
+            Sign in to manage repairs, design consultations, catering, and warranties
           </p>
         </div>
 
@@ -65,12 +65,12 @@ export const Login: React.FC = () => {
         <div className="bg-brand-50/60 rounded-2xl p-4 border border-brand-100">
           <div className="flex items-center space-x-1.5 text-xs font-bold text-brand-800 mb-2.5">
             <ShieldCheck className="w-4 h-4 text-brand-600" />
-            <span>Instant Demo Logins (1-Click Preview)</span>
+            <span>Instant Demo Logins (1-Click Switch)</span>
           </div>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             <button
               type="button"
-              onClick={() => handleQuickDemo('CUSTOMER')}
+              onClick={() => handleQuickDemo('CUSTOMER', 'customer@fixora.com')}
               className="flex flex-col items-center p-2 rounded-xl bg-white border border-brand-200 hover:border-brand-500 text-slate-800 shadow-sm hover:shadow transition-all group"
             >
               <UserCheck className="w-4 h-4 text-brand-600 group-hover:scale-110 transition-transform mb-1" />
@@ -80,18 +80,38 @@ export const Login: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => handleQuickDemo('PROVIDER')}
+              onClick={() => handleQuickDemo('PROVIDER', 'provider@fixora.com')}
               className="flex flex-col items-center p-2 rounded-xl bg-white border border-brand-200 hover:border-brand-500 text-slate-800 shadow-sm hover:shadow transition-all group"
             >
               <Briefcase className="w-4 h-4 text-emerald-600 group-hover:scale-110 transition-transform mb-1" />
-              <span className="text-[11px] font-bold">Provider</span>
-              <span className="text-[9px] text-slate-400">Alex V. (Tech)</span>
+              <span className="text-[11px] font-bold">Technician</span>
+              <span className="text-[9px] text-slate-400">Alex V. (HVAC)</span>
             </button>
 
             <button
               type="button"
-              onClick={() => handleQuickDemo('ADMIN')}
+              onClick={() => handleQuickDemo('PROVIDER', 'ananya.design@fixora.com')}
               className="flex flex-col items-center p-2 rounded-xl bg-white border border-brand-200 hover:border-brand-500 text-slate-800 shadow-sm hover:shadow transition-all group"
+            >
+              <Wrench className="w-4 h-4 text-purple-600 group-hover:scale-110 transition-transform mb-1" />
+              <span className="text-[11px] font-bold">Designer</span>
+              <span className="text-[9px] text-slate-400">Ar. Ananya</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleQuickDemo('PROVIDER', 'ranveer.cater@fixora.com')}
+              className="flex flex-col items-center p-2 rounded-xl bg-white border border-brand-200 hover:border-brand-500 text-slate-800 shadow-sm hover:shadow transition-all group"
+            >
+              <Briefcase className="w-4 h-4 text-amber-600 group-hover:scale-110 transition-transform mb-1" />
+              <span className="text-[11px] font-bold">Caterer</span>
+              <span className="text-[9px] text-slate-400">Chef Ranveer</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleQuickDemo('ADMIN', 'admin@fixora.com')}
+              className="flex flex-col items-center p-2 rounded-xl bg-white border border-brand-200 hover:border-brand-500 text-slate-800 shadow-sm hover:shadow transition-all group col-span-2 sm:col-span-1"
             >
               <ShieldCheck className="w-4 h-4 text-indigo-600 group-hover:scale-110 transition-transform mb-1" />
               <span className="text-[11px] font-bold">Admin</span>

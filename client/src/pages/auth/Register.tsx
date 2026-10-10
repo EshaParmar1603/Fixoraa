@@ -249,11 +249,11 @@ export const Register: React.FC = () => {
       <div className={`w-full transition-all duration-300 ${role === 'PROVIDER' ? 'max-w-4xl' : 'max-w-xl'} bg-white p-6 sm:p-10 rounded-3xl border border-slate-200/80 shadow-2xl space-y-8`}>
         {/* Header Title */}
         <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 via-indigo-600 to-blue-500 mx-auto flex items-center justify-center text-white shadow-glow">
-            <Wrench className="w-7 h-7" />
+          <div className="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center overflow-hidden shadow-lg border border-slate-100">
+            <img src="/citylink-app-card.png" alt="CityLink" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-            {role === 'PROVIDER' ? 'Service Provider Partner Onboarding' : 'Create Your Fixora Account'}
+            {role === 'PROVIDER' ? 'CityLink Partner Onboarding' : 'Create Your CityLink Account'}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
             {role === 'PROVIDER'

@@ -98,3 +98,17 @@ client/
 │           ├── Profile.tsx          # Account details & password changes
 │           └── NotFound.tsx         # 404 page
 ```
+
+---
+
+## 🌐 GitHub Pages Deployment
+
+The frontend automatically deploys to GitHub Pages via GitHub Actions upon pushing to the `main` branch.
+
+### Enabling GitHub Pages in GitHub:
+1. Open your repository on GitHub: `https://github.com/EshaParmar1603/Fixoraa`
+2. Go to **Settings** > **Pages** (under the "Code and automation" section).
+3. Under **Build and deployment** > **Source**, select **GitHub Actions**.
+4. The deployment workflow will automatically build the client with SPA 404 fallback routing and publish the site to:
+   👉 **`https://eshaparmar1603.github.io/Fixoraa/`**
+

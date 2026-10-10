@@ -19,7 +19,9 @@ import {
   Sparkles,
   Palette,
   Calendar,
-  Users
+  Users,
+  Network,
+  Navigation
 } from 'lucide-react';
 import { ServiceCard } from '../../components/cards/ServiceCard';
 import { ProviderCard } from '../../components/cards/ProviderCard';
@@ -417,6 +419,104 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* CITYLINK SKILLGRAPH & LIVE GPS RADAR INNOVATION SPOTLIGHT */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Card 1: CityLink SkillGraph AI */}
+          <div className="relative rounded-3xl overflow-hidden bg-white border border-[#E8E2D6] p-6 sm:p-8 shadow-sm flex flex-col justify-between hover:border-[#D1C7B7] transition-all">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#F4EFE6] text-[#7A6B58] border border-[#E8E2D6]">
+                  AI TEAM CHEMISTRY
+                </span>
+                <Network className="w-5 h-5 text-[#C58A49]" />
+              </div>
+
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-black text-[#26211C] tracking-tight leading-tight">
+                  Fixora <span className="text-[#C58A49]">SkillGraph™</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-[#7A7064] mt-2 leading-relaxed">
+                  Instead of booking 4 separate strangers who clash on site, AI pairs specialists who have already worked 20+ successful jobs together. Zero friction, shared equipment, and bundled discounts.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2.5 pt-2">
+                <div className="bg-[#FAF7F2] border border-[#E8E2D6] rounded-xl p-2.5 text-center">
+                  <span className="text-lg font-black text-[#C58A49]">98.4%</span>
+                  <span className="text-[10px] text-[#7A7064] font-bold block">Team Chemistry</span>
+                </div>
+                <div className="bg-[#FAF7F2] border border-[#E8E2D6] rounded-xl p-2.5 text-center">
+                  <span className="text-lg font-black text-[#4A7C59]">15% Off</span>
+                  <span className="text-[10px] text-[#7A7064] font-bold block">Bundle Savings</span>
+                </div>
+                <div className="bg-[#FAF7F2] border border-[#E8E2D6] rounded-xl p-2.5 text-center">
+                  <span className="text-lg font-black text-[#26211C]">1-Click</span>
+                  <span className="text-[10px] text-[#7A7064] font-bold block">Team Booking</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6">
+              <Link
+                to="/skill-graph"
+                className="w-full py-3 px-4 rounded-xl bg-[#26211C] hover:bg-[#3D352E] text-white font-extrabold text-xs transition-all shadow-sm flex items-center justify-center space-x-2"
+              >
+                <span>Launch SkillGraph Team Builder</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Card 2: Live Technician GPS Radar */}
+          <div className="relative rounded-3xl overflow-hidden bg-white border border-[#E8E2D6] p-6 sm:p-8 shadow-sm flex flex-col justify-between hover:border-[#D1C7B7] transition-all">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#EAF5EC] text-[#24592F] border border-[#B8DEC0] flex items-center space-x-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#367A47] animate-ping" />
+                  <span>LIVE GPS TRANSIT</span>
+                </span>
+                <Navigation className="w-5 h-5 text-[#367A47] animate-pulse" />
+              </div>
+
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-black text-[#26211C] tracking-tight leading-tight">
+                  Live Technician <span className="text-[#367A47]">GPS Radar</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-[#7A7064] mt-2 leading-relaxed">
+                  Track your certified technician moving live through city streets. Vector street map, real-time speed, accurate countdown ETA, and a friendly doorbell arrival chime.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2.5 pt-2">
+                <div className="bg-[#FAF7F2] border border-[#E8E2D6] rounded-xl p-2.5 text-center">
+                  <span className="text-lg font-black text-[#26211C]">Live Map</span>
+                  <span className="text-[10px] text-[#7A7064] font-bold block">Street Route</span>
+                </div>
+                <div className="bg-[#FAF7F2] border border-[#E8E2D6] rounded-xl p-2.5 text-center">
+                  <span className="text-lg font-black text-[#367A47]">32 km/h</span>
+                  <span className="text-[10px] text-[#7A7064] font-bold block">Live Telemetry</span>
+                </div>
+                <div className="bg-[#FAF7F2] border border-[#E8E2D6] rounded-xl p-2.5 text-center">
+                  <span className="text-lg font-black text-[#C58A49]">Doorbell</span>
+                  <span className="text-[10px] text-[#7A7064] font-bold block">Arrival Alert</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6">
+              <Link
+                to="/my-bookings"
+                className="w-full py-3 px-4 rounded-xl bg-[#26211C] hover:bg-[#3D352E] text-white font-extrabold text-xs transition-all shadow-sm flex items-center justify-center space-x-2"
+              >
+                <span>View Bookings & Track Live Technician</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* EXPLORE MORE OF OUR SERVICES (SPECIALIZED LIFESTYLE & EVENT SERVICES) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         <div className="mb-8">
@@ -428,68 +528,12 @@ export const Home: React.FC = () => {
             Explore More of Our Services
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
-            Tailored lifestyle solutions, smart utility calculators, and verified experts for your home.
+            Tailored lifestyle solutions, bespoke events, and verified experts for your home.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Card 1: Smart Electricity Bill Predictor */}
-          <Link
-            to="/bill-predictor"
-            className="group rounded-3xl overflow-hidden border border-slate-200/90 bg-white hover:border-amber-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-          >
-            <div>
-              <div className="relative h-44 overflow-hidden bg-gradient-to-br from-amber-500 via-orange-500 to-amber-700 p-5 flex flex-col justify-between text-slate-950">
-                <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-1 rounded-lg bg-slate-950/80 text-amber-300 text-[10px] font-black uppercase tracking-wider backdrop-blur-md">
-                    Tariff Engine
-                  </span>
-                  <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-slate-950 shadow-inner group-hover:scale-110 transition-transform">
-                    <Zap className="w-4 h-4 fill-slate-950" />
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-black text-white leading-tight drop-shadow-sm">
-                    Electricity Bill Predictor
-                  </h3>
-                  <span className="text-xs text-amber-100 font-medium block mt-0.5">
-                    Forecast bills & split rent in ₹
-                  </span>
-                </div>
-              </div>
-
-              {/* Clear Options Checklist */}
-              <div className="p-5 space-y-2.5">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Included Capabilities
-                </span>
-                <ul className="space-y-2 text-xs text-slate-700">
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                    <span>Live State DISCOM Tariff Slabs</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                    <span>AC & Appliance Hourly Simulator</span>
-                  </li>
-                  <li className="flex items-center space-x-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                    <span>1-Click WhatsApp Roommate Split</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="p-5 pt-0">
-              <div className="py-2.5 px-4 rounded-xl bg-amber-50 group-hover:bg-amber-500 text-amber-800 group-hover:text-slate-950 font-bold text-xs transition-colors flex items-center justify-between">
-                <span>Calculate My Bill</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </Link>
-
-          {/* Card 2: Bespoke Event Planner */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Card 1: Bespoke Event Planner */}
           <Link
             to="/event-planner"
             className="group rounded-3xl overflow-hidden border border-slate-200/90 bg-white hover:border-rose-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
@@ -552,7 +596,7 @@ export const Home: React.FC = () => {
             </div>
           </Link>
 
-          {/* Card 3: Gourmet Caterers */}
+          {/* Card 2: Gourmet Caterers */}
           <Link
             to="/caterers"
             className="group rounded-3xl overflow-hidden border border-slate-200/90 bg-white hover:border-amber-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
@@ -615,7 +659,7 @@ export const Home: React.FC = () => {
             </div>
           </Link>
 
-          {/* Card 4: Architectural Interior Design & Renovation */}
+          {/* Card 3: Architectural Interior Design & Renovation */}
           <Link
             to="/interior-design"
             className="group rounded-3xl overflow-hidden border border-slate-200/90 bg-white hover:border-brand-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"

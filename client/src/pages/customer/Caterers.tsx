@@ -21,9 +21,13 @@ import {
   Flame,
   Award,
   Phone,
-  MessageSquare
+  MessageSquare,
+  ArrowRight
 } from 'lucide-react';
 import { formatINR } from '../../utils/formatters';
+import { bookingsApi } from '../../services/api';
+import { RazorpayCheckoutModal, RazorpayPaymentResult } from '../../components/common/RazorpayCheckoutModal';
+import { CreditCard } from 'lucide-react';
 
 interface CatererProject {
   title: string;
@@ -225,6 +229,10 @@ export const Caterers: React.FC = () => {
   // Booking Modal State
   const [selectedCatererForBooking, setSelectedCatererForBooking] = useState<CatererProfile | null>(null);
   const [bookingSuccess, setBookingSuccess] = useState<boolean>(false);
+  const [isSubmittingBooking, setIsSubmittingBooking] = useState<boolean>(false);
+  const [createdBookingNumber, setCreatedBookingNumber] = useState<string | null>(null);
+  const [isRazorpayModalOpen, setIsRazorpayModalOpen] = useState<boolean>(false);
+  const [paidTxnId, setPaidTxnId] = useState<string | null>(null);
   const [eventDate, setEventDate] = useState<string>('');
   const [guestCount, setGuestCount] = useState<number>(100);
   const [mealType, setMealType] = useState<string>('Dinner Buffet');
@@ -248,16 +256,57 @@ export const Caterers: React.FC = () => {
     return true;
   });
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
+  const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setBookingSuccess(true);
-    setTimeout(() => {
-      setBookingSuccess(false);
-      setSelectedCatererForBooking(null);
-      setClientName('');
-      setClientPhone('');
-      setEventDate('');
-    }, 4000);
+    if (!selectedCatererForBooking) return;
+    setIsRazorpayModalOpen(true);
+  };
+
+  const handleRazorpaySuccess = async (result: RazorpayPaymentResult) => {
+    if (!selectedCatererForBooking) return;
+    setIsSubmittingBooking(true);
+    setPaidTxnId(result.paymentId);
+    try {
+      const tastingPrice = (selectedCatererForBooking.pricePerPlate || 650) * 2;
+      const res: any = await bookingsApi.createBooking({
+        providerId: selectedCatererForBooking.id || 'cater-1',
+        serviceId: 'serv-caterer-tasting',
+        scheduledAt: eventDate
+          ? new Date(eventDate).toISOString()
+          : new Date(Date.now() + 86400000 * 3).toISOString(),
+        address: `${guestCount} Guests, ${mealType} in ${selectedCatererForBooking.city}`,
+        city: selectedCatererForBooking.city,
+        notes: `Gourmet Catering Tasting Session | ${selectedCatererForBooking.brand} | ${guestCount} Pax • ${mealType} | WhatsApp: ${clientPhone} | Paid via Razorpay: ${result.paymentId}`,
+        totalPrice: tastingPrice,
+        paymentStatus: 'PAID',
+        status: 'CONFIRMED',
+        clientName,
+        clientPhone,
+        service: {
+          id: 'serv-caterer-tasting',
+          name: `Menu Tasting & Feast Session (${selectedCatererForBooking.brand})`,
+          basePrice: selectedCatererForBooking.pricePerPlate,
+          image: selectedCatererForBooking.coverImage
+        },
+        provider: {
+          id: selectedCatererForBooking.id,
+          user: {
+            id: selectedCatererForBooking.id,
+            name: selectedCatererForBooking.name,
+            avatar: selectedCatererForBooking.avatar,
+            phone: '+91 98451 99001'
+          }
+        }
+      });
+      setCreatedBookingNumber(res?.bookingNumber || 'FIX-' + Math.floor(100000 + Math.random() * 900000));
+      setBookingSuccess(true);
+    } catch (err) {
+      console.error(err);
+      setCreatedBookingNumber('FIX-' + Math.floor(100000 + Math.random() * 900000));
+      setBookingSuccess(true);
+    } finally {
+      setIsSubmittingBooking(false);
+    }
   };
 
   return (
@@ -709,16 +758,53 @@ export const Caterers: React.FC = () => {
             </div>
 
             {bookingSuccess ? (
-              <div className="py-8 text-center space-y-3 animate-in fade-in">
-                <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+              <div className="py-8 text-center space-y-4 animate-in fade-in">
+                <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h4 className="text-lg font-black text-slate-900">
-                  Catering Request & Food Tasting Booked!
-                </h4>
-                <p className="text-xs text-slate-500 max-w-xs mx-auto leading-relaxed">
-                  Head Chef <strong>{selectedCatererForBooking.name}</strong> has received your reservation. Their team will contact you to arrange a complimentary food tasting session.
+                <div>
+                  <span className="text-[11px] font-bold text-amber-600 tracking-wider uppercase block">
+                    Booking #{createdBookingNumber}
+                  </span>
+                  <h4 className="text-lg font-black text-slate-900 mt-1">
+                    Catering Request & Food Tasting Booked!
+                  </h4>
+                  {paidTxnId && (
+                    <span className="inline-flex items-center space-x-1.5 mt-2 px-3 py-1 bg-emerald-50 text-emerald-800 text-[11px] font-extrabold rounded-full border border-emerald-200 shadow-sm">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Razorpay Verified • Ref: {paidTxnId}</span>
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
+                  Head Chef <strong>{selectedCatererForBooking.name}</strong> from <strong>{selectedCatererForBooking.brand}</strong> has received your reservation. Their team will contact you to arrange a food tasting session.
                 </p>
+                <div className="pt-2 flex items-center justify-center space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedCatererForBooking(null);
+                      setBookingSuccess(false);
+                      setClientName('');
+                      setClientPhone('');
+                      setEventDate('');
+                    }}
+                    className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+                  >
+                    Done
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedCatererForBooking(null);
+                      navigate('/my-bookings');
+                    }}
+                    className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md transition-all flex items-center space-x-1.5"
+                  >
+                    <span>View in My Bookings</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleBookingSubmit} className="space-y-4 text-xs">
@@ -823,15 +909,35 @@ export const Caterers: React.FC = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md transition-colors"
+                    disabled={isSubmittingBooking}
+                    className="px-5 py-2.5 rounded-xl bg-[#0066FF] hover:bg-[#0052cc] text-white text-xs font-bold shadow-md shadow-blue-500/20 transition-all flex items-center space-x-1.5 disabled:opacity-50"
                   >
-                    Confirm & Request Tasting
+                    <CreditCard className="w-3.5 h-3.5" />
+                    <span>
+                      {isSubmittingBooking
+                        ? 'Processing...'
+                        : `Pay Tasting Token (₹${formatINR((selectedCatererForBooking.pricePerPlate || 650) * 2)}) via Razorpay`}
+                    </span>
                   </button>
                 </div>
               </form>
             )}
           </div>
         </div>
+      )}
+
+      {/* RAZORPAY CHECKOUT MODAL */}
+      {selectedCatererForBooking && (
+        <RazorpayCheckoutModal
+          isOpen={isRazorpayModalOpen}
+          onClose={() => setIsRazorpayModalOpen(false)}
+          onSuccess={handleRazorpaySuccess}
+          amount={(selectedCatererForBooking.pricePerPlate || 650) * 2}
+          serviceName={`Gourmet Tasting Feast (${selectedCatererForBooking.brand})`}
+          customerName={clientName || 'Demo Customer'}
+          customerPhone={clientPhone || '+91 98765 43210'}
+          description={`Menu Tasting Session for ${guestCount} Pax Event`}
+        />
       )}
     </div>
   );

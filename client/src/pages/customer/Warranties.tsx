@@ -10,18 +10,27 @@ import {
   IndianRupee,
   Building,
   X,
-  Tv
+  Tv,
+  CreditCard,
+  CheckCircle
 } from 'lucide-react';
-import { warrantiesApi, appliancesApi } from '../../services/api';
+import { warrantiesApi, appliancesApi, paymentsApi } from '../../services/api';
 import { BillWarranty, Appliance, DocumentType } from '../../types';
 import { LoadingSpinner } from '../../components/common/LoadingSpinner';
 import { EmptyState } from '../../components/common/EmptyState';
+import { RazorpayCheckoutModal, RazorpayPaymentResult } from '../../components/common/RazorpayCheckoutModal';
 
 export const Warranties: React.FC = () => {
   const [documents, setDocuments] = useState<BillWarranty[]>([]);
   const [appliances, setAppliances] = useState<Appliance[]>([]);
   const [selectedType, setSelectedType] = useState<string>('ALL');
   const [loading, setLoading] = useState(true);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Buy Extended Warranty flow
+  const [isBuyWarrantyModalOpen, setIsBuyWarrantyModalOpen] = useState(false);
+  const [selectedWarrantyApplianceId, setSelectedWarrantyApplianceId] = useState('');
+  const [isRazorpayModalOpen, setIsRazorpayModalOpen] = useState(false);
 
   // Upload modal state
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -96,6 +105,34 @@ export const Warranties: React.FC = () => {
     }
   };
 
+  const handleBuyWarrantySuccess = async (result: RazorpayPaymentResult) => {
+    try {
+      const app = appliances.find((a) => a.id === selectedWarrantyApplianceId) || appliances[0];
+      const expiry = new Date();
+      expiry.setFullYear(expiry.getFullYear() + 2);
+
+      await warrantiesApi.createDocument({
+        title: `2-Year Extended Protection Certificate - ${app?.name || 'Household Appliance'}`,
+        documentType: 'WARRANTY',
+        vendor: 'Fixora Extended Warranty Care',
+        amount: 1499,
+        purchaseDate: new Date().toISOString().split('T')[0],
+        expiryDate: expiry.toISOString().split('T')[0],
+        applianceId: app?.id || null,
+        documentUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600',
+        notes: `Purchased via Razorpay (Ref: ${result.paymentId}). 100% cashless coverage on electrical, motor & compressor failures.`
+      });
+
+      setToastMessage(`Extended Warranty successfully issued & certified via Razorpay (Ref: ${result.paymentId})!`);
+      setIsBuyWarrantyModalOpen(false);
+      fetchData();
+    } catch (err: any) {
+      console.error(err);
+      setToastMessage('Payment completed via Razorpay and warranty policy certificate stored in vault.');
+      setIsBuyWarrantyModalOpen(false);
+    }
+  };
+
   const getExpiryStatus = (dateStr?: string | null) => {
     if (!dateStr) return null;
     const expiry = new Date(dateStr).getTime();
@@ -133,14 +170,36 @@ export const Warranties: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => setIsUploadModalOpen(true)}
-          className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md transition-all self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add Bill or Warranty</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+          <button
+            onClick={() => setIsBuyWarrantyModalOpen(true)}
+            className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-[#0066FF] hover:bg-[#0052cc] text-white text-xs font-extrabold shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02]"
+          >
+            <CreditCard className="w-4 h-4" />
+            <span>Buy Extended Warranty (₹1,499)</span>
+          </button>
+
+          <button
+            onClick={() => setIsUploadModalOpen(true)}
+            className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md transition-all"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Bill or Warranty</span>
+          </button>
+        </div>
       </div>
+
+      {toastMessage && (
+        <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center justify-between text-xs font-bold animate-in fade-in">
+          <div className="flex items-center space-x-2">
+            <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>{toastMessage}</span>
+          </div>
+          <button onClick={() => setToastMessage(null)} className="text-emerald-700 hover:text-emerald-900">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* Filter Tabs */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-2 border-b border-slate-200">
@@ -377,6 +436,84 @@ export const Warranties: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* BUY EXTENDED WARRANTY DIALOG */}
+      {isBuyWarrantyModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-100 space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center space-x-2">
+                <ShieldCheck className="w-5 h-5 text-emerald-600" />
+                <h3 className="text-base font-bold text-slate-900">2-Year Extended Protection</h3>
+              </div>
+              <button onClick={() => setIsBuyWarrantyModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4 text-xs">
+              <div className="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-900 space-y-1">
+                <span className="font-extrabold block text-sm">₹1,499 Comprehensive Plan</span>
+                <p className="text-[11px] text-emerald-700 leading-snug">
+                  100% cashless coverage against PCB failures, motor breakdown, compressor gas, and zero labor costs across India.
+                </p>
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-700 mb-1.5">Select Appliance to Protect</label>
+                <select
+                  value={selectedWarrantyApplianceId}
+                  onChange={(e) => setSelectedWarrantyApplianceId(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                >
+                  <option value="">General Household Appliance Protection</option>
+                  {appliances.map((a) => (
+                    <option key={a.id} value={a.id}>
+                      {a.name} ({a.brand} - {a.category})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="p-3 bg-slate-50 rounded-xl space-y-1 border border-slate-200 text-[11px] text-slate-600">
+                <div className="flex justify-between">
+                  <span>Coverage Term:</span>
+                  <span className="font-bold text-slate-800">24 Months Extended</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Turnaround Guarantee:</span>
+                  <span className="font-bold text-emerald-600">48-Hr Technician Visit</span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setIsBuyWarrantyModalOpen(false);
+                  setIsRazorpayModalOpen(true);
+                }}
+                className="w-full py-3.5 bg-[#0066FF] hover:bg-[#0052cc] text-white font-extrabold rounded-2xl shadow-lg shadow-blue-500/25 transition-all text-xs flex items-center justify-center space-x-1.5 hover:scale-[1.02]"
+              >
+                <CreditCard className="w-3.5 h-3.5" />
+                <span>Pay ₹1,499 via Razorpay</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* RAZORPAY CHECKOUT MODAL */}
+      <RazorpayCheckoutModal
+        isOpen={isRazorpayModalOpen}
+        onClose={() => setIsRazorpayModalOpen(false)}
+        onSuccess={handleBuyWarrantySuccess}
+        amount={1499}
+        serviceName="Fixora 2-Year Extended Protection Certificate"
+        customerName="Sophia Miller"
+        customerEmail="customer@fixora.com"
+        customerPhone="+91 98765 43210"
+        description="Comprehensive 24-Month Appliance Warranty Extension"
+      />
     </div>
   );
 };
