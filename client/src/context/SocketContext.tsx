@@ -46,6 +46,12 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       return;
     }
 
+    // Skip connecting to local backend when running on HTTPS production without a custom websocket URL
+    const isHttpsProd = typeof window !== 'undefined' && window.location.protocol === 'https:';
+    if (isHttpsProd && (!import.meta.env.VITE_SOCKET_URL || SOCKET_URL.includes('localhost'))) {
+      return;
+    }
+
     // Initialize socket connection
     const newSocket = io(SOCKET_URL, {
       auth: { token },

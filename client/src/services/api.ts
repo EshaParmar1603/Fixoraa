@@ -562,9 +562,31 @@ let mockConversations: Conversation[] = [
 
 // Helper to wrap real request with fallback
 async function executeApiCall<T>(apiFn: () => Promise<{ data: any }>, fallbackData: T): Promise<T> {
+  // If running in production (e.g. Vercel, GitHub Pages) without an explicit external backend API URL,
+  // use the built-in offline/demo store immediately to avoid HTML SPA rewrites.
+  const isLocalHost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  if (!isLocalHost && !import.meta.env.VITE_API_URL) {
+    return fallbackData;
+  }
+
   try {
     const res = await apiFn();
-    return res.data?.data !== undefined ? res.data.data : res.data;
+    const result = res.data?.data !== undefined ? res.data.data : res.data;
+
+    // Check if response is an HTML document returned by Vercel/SPA router fallback
+    if (typeof result === 'string' && (result.trim().startsWith('<') || result.includes('<!doctype') || result.includes('<!DOCTYPE'))) {
+      return fallbackData;
+    }
+    // If an array was expected but the response is not an array, use fallbackData
+    if (Array.isArray(fallbackData) && !Array.isArray(result)) {
+      return fallbackData;
+    }
+    // If an object was expected but response is primitive or null
+    if (typeof fallbackData === 'object' && fallbackData !== null && (typeof result !== 'object' || result === null)) {
+      return fallbackData;
+    }
+
+    return result ?? fallbackData;
   } catch (err: any) {
     // If backend is offline or network error, fallback to curated mock data
     console.warn('[Fixora API Notice]: Backend unreachable or returned error, using local fallback state.', err.message);
